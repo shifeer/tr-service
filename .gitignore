@@ -15,11 +15,12 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
-.modelsVosk
-.tempAudiofiles
 *.iws
 *.iml
 *.ipr
+.modelsVosk
+.tempAudiofiles
+
 
 ### NetBeans ###
 /nbproject/private/
