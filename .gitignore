@@ -18,8 +18,9 @@ target/
 *.iws
 *.iml
 *.ipr
-.modelsVosk
-.tempAudiofiles
+
+/mnt/sdb3/Downloads/proj/transcription-service/modelsVosk
+/mnt/sdb3/Downloads/proj/transcription-service/tempAudiofiles
 
 
 ### NetBeans ###
