@@ -20,7 +20,7 @@ target/
 *.ipr
 
 /modelsVosk/
-/mnt/sdb3/Downloads/proj/transcription-service/tempAudiofiles
+/tempAudiofiles/
 
 
 ### NetBeans ###
