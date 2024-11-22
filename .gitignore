@@ -19,7 +19,7 @@ target/
 *.iml
 *.ipr
 
-.modelsVosk/
+/modelsVosk/
 /mnt/sdb3/Downloads/proj/transcription-service/tempAudiofiles
 
 
