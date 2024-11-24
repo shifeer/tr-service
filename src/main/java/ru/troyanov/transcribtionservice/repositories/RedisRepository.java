@@ -1,7 +1,6 @@
 package ru.troyanov.transcribtionservice.repositories;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import ru.troyanov.transcribtionservice.model.Status;

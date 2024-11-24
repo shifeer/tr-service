@@ -1,18 +1,13 @@
 package ru.troyanov.transcribtionservice.controllers;
 
-import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.troyanov.transcribtionservice.configurations.StatusHandlerFactory;
 import ru.troyanov.transcribtionservice.dto.TaskDto;
-import ru.troyanov.transcribtionservice.exception.TaskNotFoundException;
 import ru.troyanov.transcribtionservice.model.Status;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
 import ru.troyanov.transcribtionservice.service.TranscriptionService;
