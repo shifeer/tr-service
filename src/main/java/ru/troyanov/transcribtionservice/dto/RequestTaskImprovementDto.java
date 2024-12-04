@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestImprTextDto {
+public class RequestTaskImprovementDto {
     private String lang;
     private String text;
 }

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.troyanov.transcribtionservice.dto.RequestImprTextDto;
+import ru.troyanov.transcribtionservice.dto.RequestTaskImprovementDto;
 import ru.troyanov.transcribtionservice.dto.TaskImprovementDto;
 import ru.troyanov.transcribtionservice.model.Status;
 import ru.troyanov.transcribtionservice.service.ImprovementTextService;
@@ -27,7 +27,7 @@ public class TextImprovementController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskImprovementDto> getImprovementText(@RequestBody RequestImprTextDto imprTextDto) {
+    public ResponseEntity<TaskImprovementDto> getImprovementText(@RequestBody RequestTaskImprovementDto imprTextDto) {
 
         String taskId = UUID.randomUUID().toString();
         improvementTextService.improvementText(imprTextDto, taskId);
