@@ -6,7 +6,7 @@ import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import ru.troyanov.transcribtionservice.dto.ResponseImprTextDto;
+import ru.troyanov.transcribtionservice.dto.TaskImprovementDto;
 import ru.troyanov.transcribtionservice.model.Status;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
 
@@ -15,17 +15,17 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class DoneImprovStatus implements StatusProcessor<ResponseImprTextDto> {
+public class DoneImprovStatus implements StatusProcessor<TaskImprovementDto> {
 
     private final RedisRepository redisRepository;
     private final ObjectMapper objectMapper;
 
     @Override
     @SneakyThrows
-    public ResponseEntity<ResponseImprTextDto> handle(String taskId) {
+    public ResponseEntity<TaskImprovementDto> handle(String taskId) {
         String taskResult = redisRepository.getTaskResult(taskId);
         Map<String, Map<String, List<String>>> errors = objectMapper.readValue(taskResult, Map.class);
-        ResponseImprTextDto response = ResponseImprTextDto.builder()
+        TaskImprovementDto response = TaskImprovementDto.builder()
                 .taskId(taskId)
                 .status(Status.DONE)
                 .potentialErrors(errors)

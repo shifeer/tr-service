@@ -13,7 +13,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseImprTextDto {
+public class TaskImprovementDto {
     private String taskId;
     private Status status;
     private Map<String, Map<String, List<String>>> potentialErrors;
