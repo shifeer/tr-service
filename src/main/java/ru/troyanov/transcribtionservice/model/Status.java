@@ -5,7 +5,6 @@ import java.util.Arrays;
 public enum Status {
     PROCESSING("processing"),
     ERROR("error"),
-    ERROR_FORMAT("error_format"),
     DONE("done");
 
     private String value;

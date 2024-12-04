@@ -4,13 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import ru.troyanov.transcribtionservice.model.Status;
-
 import java.time.Duration;
 
 @Component
 @RequiredArgsConstructor
 public class RedisRepository {
-    private final RedisTemplate<String, Object> redisTemplate;
+    protected final RedisTemplate<String, Object> redisTemplate;
 
     public void createNewTask(String taskId) {
         redisTemplate.opsForHash().put(taskId, "status", Status.PROCESSING.toString());
