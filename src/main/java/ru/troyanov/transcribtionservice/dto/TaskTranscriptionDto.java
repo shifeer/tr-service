@@ -10,7 +10,7 @@ import ru.troyanov.transcribtionservice.model.Status;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TaskDto {
+public class TaskTranscriptionDto {
     private String taskId;
     private Status status;
     private String taskResult;
