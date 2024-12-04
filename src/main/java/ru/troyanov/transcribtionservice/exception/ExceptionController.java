@@ -26,4 +26,8 @@ public class ExceptionController {
     public ResponseEntity<ErrorDto> handleConvertExtensionToWavException(ConvertExtensionToWavException e) {
         return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    @ExceptionHandler(TaskExecuteException.class)
+    public ResponseEntity<ErrorDto> handleTaskExecuteException(TaskExecuteException e) {
+        return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

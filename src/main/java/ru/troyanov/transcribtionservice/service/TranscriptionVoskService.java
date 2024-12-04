@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.vosk.Model;
 import org.vosk.Recognizer;
 import ru.troyanov.transcribtionservice.model.Status;
@@ -20,17 +19,14 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
 
-import static java.nio.file.Files.*;
+import static java.nio.file.Files.delete;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class TranscriptionVoskService implements TranscriptionService {
 
-    @Value("${path.to.dir}")
-    private Path pathToDir;
     @Value("${vosk.path-model}")
     private String PATH_MODEL;
     private final RedisRepository redisRepository;
@@ -38,23 +34,13 @@ public class TranscriptionVoskService implements TranscriptionService {
 
     @Override
     @Async
-    public void doTranscribe(MultipartFile multipartFile, String taskId) {
-        File file = multuToFile(multipartFile);
+    public void doTranscribe(File file, String taskId) {
+        redisRepository.createNewTask(taskId);
         File audioFile = converterExtensionService.convertToWav(file);
         String recognize = recognize(audioFile, taskId);
         if (recognize != null) {
             redisRepository.setResult(taskId, recognize);
         }
-    }
-
-    @SneakyThrows
-    private File multuToFile(MultipartFile multipartFile) {
-
-        byte[] audioBytes = multipartFile.getBytes();
-        Path file = createTempFile(pathToDir, multipartFile.getOriginalFilename(), "");
-        write(file, audioBytes);
-
-        return file.toFile();
     }
 
     @SneakyThrows(IOException.class)
@@ -81,7 +67,7 @@ public class TranscriptionVoskService implements TranscriptionService {
 
         } catch (UnsupportedAudioFileException e) {
             log.warn("Error for {}", file.getName());
-            redisRepository.setStatusError(taskId, Status.ERROR_FORMAT);
+            redisRepository.setStatusError(taskId, Status.ERROR);
             return null;
         } finally {
             delete(file.toPath());

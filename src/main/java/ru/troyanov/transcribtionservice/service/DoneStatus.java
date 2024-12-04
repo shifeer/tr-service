@@ -10,7 +10,7 @@ import ru.troyanov.transcribtionservice.repositories.RedisRepository;
 
 @Component
 @RequiredArgsConstructor
-public class DoneStatus implements StatusHandler {
+public class DoneStatus implements StatusProcessor<TaskDto> {
 
     private final RedisRepository redisRepository;
 

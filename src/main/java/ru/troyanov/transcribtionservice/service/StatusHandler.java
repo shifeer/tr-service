@@ -1,8 +1,9 @@
 package ru.troyanov.transcribtionservice.service;
 
 import org.springframework.http.ResponseEntity;
-import ru.troyanov.transcribtionservice.dto.TaskDto;
+import ru.troyanov.transcribtionservice.model.Status;
 
-public interface StatusHandler {
-    ResponseEntity<TaskDto> handle(String taskId);
+public interface StatusHandler<D> {
+    ResponseEntity<D> getResponse(String taskId);
+    ResponseEntity<D> getResponse(Status status, String taskId);
 }
