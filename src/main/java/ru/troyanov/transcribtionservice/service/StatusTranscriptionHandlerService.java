@@ -12,20 +12,20 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-public class StatusTranscriptionHandler implements StatusHandler<TaskTranscriptionDto> {
+public class StatusTranscriptionHandlerService implements StatusHandler<TaskTranscriptionDto> {
 
     private final Map<Status, StatusProcessor<TaskTranscriptionDto>> statusProcessors;
     private final RedisRepository redisRepository;
 
-    public StatusTranscriptionHandler(DoneStatus doneStatus,
-                                      ErrorStatus errorStatus,
-                                      ProcessingStatus processingStatus,
-                                      RedisRepository redisRepository) {
+    public StatusTranscriptionHandlerService(DoneTranscriptionStatus doneTranscriptionStatus,
+                                             ErrorTranscriptionStatus errorTranscriptionStatus,
+                                             ProcessingTranscriptionStatus processingTranscriptionStatus,
+                                             RedisRepository redisRepository) {
         this.redisRepository = redisRepository;
         statusProcessors = new EnumMap<>(Status.class);
-        statusProcessors.put(Status.DONE, doneStatus);
-        statusProcessors.put(Status.ERROR, errorStatus);
-        statusProcessors.put(Status.PROCESSING, processingStatus);
+        statusProcessors.put(Status.DONE, doneTranscriptionStatus);
+        statusProcessors.put(Status.ERROR, errorTranscriptionStatus);
+        statusProcessors.put(Status.PROCESSING, processingTranscriptionStatus);
     }
 
     public ResponseEntity<TaskTranscriptionDto> getResponse(String taskId) {

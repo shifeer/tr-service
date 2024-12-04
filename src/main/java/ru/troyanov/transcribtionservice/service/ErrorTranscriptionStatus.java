@@ -6,7 +6,7 @@ import ru.troyanov.transcribtionservice.dto.TaskTranscriptionDto;
 import ru.troyanov.transcribtionservice.exception.TaskExecuteException;
 
 @Component
-public class ErrorStatus implements StatusProcessor<TaskTranscriptionDto> {
+public class ErrorTranscriptionStatus implements StatusProcessor<TaskTranscriptionDto> {
     @Override
     public ResponseEntity<TaskTranscriptionDto> handle(String taskId) {
         throw new TaskExecuteException("Error when working with the task");

@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import ru.troyanov.transcribtionservice.dto.TaskTranscriptionDto;
 import ru.troyanov.transcribtionservice.model.Status;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
-import ru.troyanov.transcribtionservice.service.StatusTranscriptionHandler;
+import ru.troyanov.transcribtionservice.service.StatusTranscriptionHandlerService;
 import ru.troyanov.transcribtionservice.service.TranscriptionService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +33,7 @@ public class TranscriptionControllerIT {
     @Autowired
     private TranscriptionService transcriptionService;
     @Autowired
-    private StatusTranscriptionHandler statusTranscriptionHandler;
+    private StatusTranscriptionHandlerService statusTranscriptionHandlerService;
 
     @Test
     public void givenSuccessResponse_whenGetTranscription_thenSuccess() {

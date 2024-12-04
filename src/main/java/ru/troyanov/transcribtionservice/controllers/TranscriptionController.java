@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.troyanov.transcribtionservice.dto.TaskTranscriptionDto;
 import ru.troyanov.transcribtionservice.model.Status;
 import ru.troyanov.transcribtionservice.service.MultiToSimpleFileService;
-import ru.troyanov.transcribtionservice.service.StatusTranscriptionHandler;
+import ru.troyanov.transcribtionservice.service.StatusTranscriptionHandlerService;
 import ru.troyanov.transcribtionservice.service.TranscriptionService;
 import ru.troyanov.transcribtionservice.validators.ValidFileFormatOrEmpty;
 
@@ -24,7 +24,7 @@ import java.util.UUID;
 public class TranscriptionController {
 
     private final TranscriptionService transcriptionService;
-    private final StatusTranscriptionHandler statusTranscriptionHandler;
+    private final StatusTranscriptionHandlerService statusTranscriptionHandlerService;
     private final MultiToSimpleFileService multiToSimpleFileService;
 
     @PostMapping
@@ -33,7 +33,7 @@ public class TranscriptionController {
         String taskId = UUID.randomUUID().toString();
         transcriptionService.doTranscribe(multiToSimpleFileService.multiToFile(multipartFile), taskId);
 
-        return statusTranscriptionHandler.getResponse(Status.PROCESSING, taskId);
+        return statusTranscriptionHandlerService.getResponse(Status.PROCESSING, taskId);
     }
 
     @GetMapping("/{taskId}")
@@ -44,6 +44,6 @@ public class TranscriptionController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return statusTranscriptionHandler.getResponse(taskId);
+        return statusTranscriptionHandlerService.getResponse(taskId);
     }
 }
