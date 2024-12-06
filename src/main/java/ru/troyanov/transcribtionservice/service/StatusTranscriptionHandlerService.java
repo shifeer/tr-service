@@ -2,9 +2,9 @@ package ru.troyanov.transcribtionservice.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import ru.troyanov.transcribtionservice.dto.TaskTranscriptionDto;
 import ru.troyanov.transcribtionservice.exception.TaskNotFoundException;
 import ru.troyanov.transcribtionservice.model.Status;
+import ru.troyanov.transcribtionservice.model.TaskTranscription;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
 
 import java.util.EnumMap;
@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-public class StatusTranscriptionHandlerService implements StatusHandler<TaskTranscriptionDto> {
+public class StatusTranscriptionHandlerService implements StatusHandler<TaskTranscription> {
 
-    private final Map<Status, StatusProcessor<TaskTranscriptionDto>> statusProcessors;
+    private final Map<Status, StatusProcessor<TaskTranscription>> statusProcessors;
     private final RedisRepository redisRepository;
 
     public StatusTranscriptionHandlerService(DoneTranscriptionStatus doneTranscriptionStatus,
@@ -28,7 +28,8 @@ public class StatusTranscriptionHandlerService implements StatusHandler<TaskTran
         statusProcessors.put(Status.PROCESSING, processingTranscriptionStatus);
     }
 
-    public ResponseEntity<TaskTranscriptionDto> getResponse(String taskId) {
+    @Override
+    public ResponseEntity<TaskTranscription> getResponse(String taskId) {
         Optional<String> statusString = Optional.ofNullable(redisRepository.getTaskStatus(taskId));
 
         if (statusString.isEmpty()) {
@@ -36,14 +37,14 @@ public class StatusTranscriptionHandlerService implements StatusHandler<TaskTran
         }
 
         Status status = Status.fromString(statusString.get());
-        StatusProcessor<TaskTranscriptionDto> statusProcessor = statusProcessors.get(status);
+        StatusProcessor<TaskTranscription> statusProcessor = statusProcessors.get(status);
 
         return statusProcessor.handle(taskId);
     }
 
     @Override
-    public ResponseEntity<TaskTranscriptionDto> getResponse(Status status, String taskId) {
-        StatusProcessor<TaskTranscriptionDto> statusProcessor = statusProcessors.get(status);
+    public ResponseEntity<TaskTranscription> getResponse(Status status, String taskId) {
+        StatusProcessor<TaskTranscription> statusProcessor = statusProcessors.get(status);
         return statusProcessor.handle(taskId);
     }
 }

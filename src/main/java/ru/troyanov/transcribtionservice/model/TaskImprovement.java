@@ -1,11 +1,9 @@
-package ru.troyanov.transcribtionservice.dto;
+package ru.troyanov.transcribtionservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.troyanov.transcribtionservice.model.Status;
-
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +11,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskImprovementDto {
+public class TaskImprovement {
     private String taskId;
     private Status status;
     private Map<String, Map<String, List<String>>> potentialErrors;

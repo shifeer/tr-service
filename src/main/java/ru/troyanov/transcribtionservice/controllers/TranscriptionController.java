@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.troyanov.transcribtionservice.dto.TaskTranscriptionDto;
 import ru.troyanov.transcribtionservice.model.Status;
+import ru.troyanov.transcribtionservice.model.TaskTranscription;
 import ru.troyanov.transcribtionservice.service.MultiToSimpleFileService;
 import ru.troyanov.transcribtionservice.service.StatusTranscriptionHandlerService;
 import ru.troyanov.transcribtionservice.service.TranscriptionService;
@@ -28,7 +28,7 @@ public class TranscriptionController {
     private final MultiToSimpleFileService multiToSimpleFileService;
 
     @PostMapping
-    public ResponseEntity<TaskTranscriptionDto> doTranscription(@ValidFileFormatOrEmpty @RequestParam("file") MultipartFile multipartFile) {
+    public ResponseEntity<TaskTranscription> doTranscription(@ValidFileFormatOrEmpty @RequestParam("file") MultipartFile multipartFile) {
 
         String taskId = UUID.randomUUID().toString();
         transcriptionService.doTranscribe(multiToSimpleFileService.multiToFile(multipartFile), taskId);
@@ -37,7 +37,7 @@ public class TranscriptionController {
     }
 
     @GetMapping("/{taskId}")
-    public ResponseEntity<TaskTranscriptionDto> getResult(@PathVariable("taskId") String taskId) {
+    public ResponseEntity<TaskTranscription> getResult(@PathVariable("taskId") String taskId) {
 
         if (taskId == null) {
             log.warn("Task id is empty");
