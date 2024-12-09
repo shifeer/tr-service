@@ -7,12 +7,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   <title>Транскрибация аудио в текст</title>
-  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="transcription">
         <a href="#" class="close-button">
-            <img src="assets/img/cross.svg" alt="Закрыть" />
+            <img src="/img/cross.svg" alt="Закрыть" />
         </a>
         <div class="transcription-container">
             <div class="transcription-header">
@@ -28,7 +28,7 @@
 
             <div class="language-selection">
                 <label for="language">Язык речи *</label>
-                <div class="language-buttons">
+                <div class="language-buttons" id="language">
                   <button class="language-btn active" data-lang="ru">Русский</button>
                   <button class="language-btn" data-lang="en">Английский</button>
                 </div>
@@ -39,6 +39,6 @@
             </div>
         </div>
     </div>
-  <script src="/static/transcription.js"></script>
+  <script src="/transcription.js"></script>
 </body>
 </html>

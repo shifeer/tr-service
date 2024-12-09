@@ -15,7 +15,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: url('/static/img/sea.jpg') no-repeat center center/cover;
+      background: url('/img/sea.jpg') no-repeat center center/cover;
       color: white;
       font-family: 'Inter';
       text-align: center;
@@ -55,9 +55,9 @@
 <body>
   <div class="upload-container">
     <a href="#" class="close-button" id="close-button">
-        <img src="/static/img/cross.svg" alt="Закрыть" />
+        <img src="/img/cross.svg" alt="Закрыть" />
     </a>
-    <img src="/static/img/micro_loading.png" alt="Microphone" class="microphone-icon">
+    <img src="/img/micro_loading.png" alt="Microphone" class="microphone-icon">
     <div class="progress" id="progress-text">0%</div>
     <input type="file" id="file-upload" style="display: none;" />
   </div>
@@ -98,7 +98,7 @@
           uploadInProgress = false;  // Обновляем флаг
         }
         // Переход на страницу main
-        window.location.href = 'main.html';
+        window.location.href = 'main';
       });
     });
   </script>  

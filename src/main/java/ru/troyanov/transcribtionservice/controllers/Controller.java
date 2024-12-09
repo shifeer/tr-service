@@ -8,4 +8,8 @@ public class Controller {
     public String index() {
         return "main";
     }
+    @GetMapping("/transcription")
+    public String loading() {
+        return "transcription";
+    }
 }

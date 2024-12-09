@@ -36,11 +36,11 @@ faqItems.forEach(item => {
         const isActive = item.classList.toggle('active'); // Переключаем класс 'active'
         
         if (isActive) {
-            toggleButton.style.backgroundImage = "url('/static/img/minus.svg')"; // Меняем иконку на минус
+            toggleButton.style.backgroundImage = "url('/img/minus.svg')"; // Меняем иконку на минус
             toggleButton.style.opacity = "0.6"; // Устанавливаем прозрачность
             answer.style.display = 'block'; // Показываем ответ
         } else {
-            toggleButton.style.backgroundImage = "url('/static/img/plus.svg')"; // Меняем иконку на плюс
+            toggleButton.style.backgroundImage = "url('/img/plus.svg')"; // Меняем иконку на плюс
             toggleButton.style.opacity = "1"; // Убираем прозрачность
             answer.style.display = 'none'; // Скрываем ответ
         }
@@ -71,7 +71,7 @@ faqItems.forEach(item => {
         .then((response) => {
           if (response.ok) {
             // Если файл успешно загружен, переходим на страницу прогресса
-            window.location.href = 'loading.html';
+            window.location.href = 'loading';
           } else {
             alert('Ошибка загрузки файла на сервер');
           }
