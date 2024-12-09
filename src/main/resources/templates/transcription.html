@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <title>Транскрибация аудио в текст</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="transcription">
+        <a href="#" class="close-button">
+            <img src="assets/img/cross.svg" alt="Закрыть" />
+        </a>
+        <div class="transcription-container">
+            <div class="transcription-header">
+                <h1>
+                    Онлайн преобразование<span class="line-break"> аудио в текст</span>
+                </h1>
+                <div class="horizontal-line"></div>
+                <div class="audio-duration">
+                <span>Общая длительность</span>
+                <span id="audio-duration">00:00:00</span>
+                </div>
+            </div>
+
+            <div class="language-selection">
+                <label for="language">Язык речи *</label>
+                <div class="language-buttons">
+                  <button class="language-btn active" data-lang="ru">Русский</button>
+                  <button class="language-btn" data-lang="en">Английский</button>
+                </div>
+            </div>
+
+            <div class="transcription-controls">
+                <button id="start-transcription" class="start-button">Преобразовать в текст</button>
+            </div>
+        </div>
+    </div>
+  <script src="transcription.js"></script>
+</body>
+</html>
