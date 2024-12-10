@@ -96,7 +96,8 @@ fileInput.addEventListener('change', async () => {
 
 // Функция для отправки файла и языка
 async function sendFileWithLanguage(file, language) {
-    const url = `http://localhost:8080/api/v1/transcription`;
+    const baseUrl = `http://localhost:8080/api/v1/transcription`;
+    const url = `${baseUrl}?language=${language}`; // Добавляем параметр языка
 
     try {
         const fileBase64 = await convertFileToBase64(file);
@@ -125,12 +126,11 @@ async function sendFileWithLanguage(file, language) {
         }
 
         console.log('Переход на следующую страницу с taskId:', taskId);
-        window.location.href = `/result.html?taskId=${encodeURIComponent(taskId)}`;
+        window.location.href = `/transcription.html?taskId=${encodeURIComponent(taskId)}&language=${encodeURIComponent(language)}`;
     } catch (error) {
         console.error(`Ошибка: ${error.message}`);
     }
 }
-
 
 // Преобразование файла в base64
 function convertFileToBase64(file) {
@@ -141,7 +141,6 @@ function convertFileToBase64(file) {
         reader.readAsDataURL(file);
     });
 }
-
 
 // Функция для опроса статуса задачи
 async function pollTaskStatus(taskId) {
