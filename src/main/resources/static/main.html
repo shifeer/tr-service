@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonify</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Модальное окно</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main id="home">
+        <div class="header">
+            <a href="#" class="active" id="link-home">Главная</a>
+            <a href="#history" id="link-history">История</a>
+            <a href="#faq" id="link-faq">FAQ</a>
+        </div>
+
+        <!-- Название сайта -->
+        <div class="site-title">
+            S<span class="site-title-o"><img src="assets/img/o.png" alt="o"></span>nify
+        </div>
+
+        <!-- Кнопка "Выберите аудиофайл" -->
+        <button class="upload-button" id="openModalBtn">Выберите аудиофайл</button>
+    </main>
+
+    <!-- Модальное окно -->
+    <div id="modal" class="modal">
+        <div class="transcription">
+            <a href="#" class="close-button">
+                <img src="assets/img/cross.svg" id="closeModalBtn" alt="Закрыть" />
+            </a>
+            <div class="transcription-container">
+                <div class="transcription-header">
+                    <h1>
+                        Онлайн преобразование<span class="line-break"> аудио в текст</span>
+                    </h1>
+                    <div class="horizontal-line"></div>
+                </div>
+    
+                <div class="language-selection">
+                    <label for="language">Язык речи *</label>
+                    <select id="language" class="language-dropdown">
+                        <option value="ru" selected>Русский</option>
+                        <option value="en">Английский</option>
+                    </select>
+                </div>                
+    
+                <div class="transcription-controls">
+                    <button id="upload-button" class="start-button">Выбрать аудиофайл</button>
+                    <input type="file" id="file-input" accept="audio/*">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="history" id="history">
+        <div class="history-content">
+            <h2>История создания</h2>
+            <p>
+                Транскрибация текста началась в 1950-х с простых систем распознавания отдельных слов.
+                В 1980-х использование скрытых марковских моделей улучшило точность. Сегодня, с развитием
+                нейронных сетей и ИИ, транскрибация стала точной и возможной в реальном времени.
+            </p>
+            <a href="#">Ознакомиться с источником информации</a>
+        </div>
+        <div class="history-image">
+            <img src="assets/img/micro.png" alt="Микрофон на фоне моря">
+        </div>
+    </section>
+        
+    <section class="faq" id="faq">
+        <!-- Заголовок, не входящий во флекс-контейнер -->
+        <h2>Об использовании</h2>
+        
+        <!-- Флекс-контейнер для двух столбцов -->
+        <div class="faq-container">
+            <!-- Первый столбец с картинкой -->
+            <div class="question-block">
+                <img src="assets/img/quest.png" alt="Вопрос">
+            </div>
+            <!-- Второй столбец с вопросами, ответами и второй картинкой -->
+            <div class="question-block">
+                <div class="questions">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <button class="faq-toggle"></button>
+                            <span>Поддержка нескольких языков</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>***</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <button class="faq-toggle"></button>
+                            <span>Поддержка различных форматов</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Мы поддерживаем большинство популярных форматов, включая MP3, WAV, AAC и другие.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <button class="faq-toggle"></button>
+                            <span>Простота и удобство</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>***</p>
+                        </div>
+                    </div>
+                </div>
+                <img src="assets/img/volna.png" alt="Волна">
+            </div>
+        </div>
+    </section>
+    
+    
+    <script src="script.js"></script>
+</body>
+</html>
