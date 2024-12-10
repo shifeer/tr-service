@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -13,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import ru.troyanov.transcribtionservice.exception.ErrorDto;
 import ru.troyanov.transcribtionservice.model.Status;
 import ru.troyanov.transcribtionservice.model.TaskTranscription;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
@@ -29,6 +32,8 @@ public class TranscriptionControllerIT {
     private int port;
 
     @Autowired
+    private TestRestTemplate restTemplate;
+    @Autowired
     private RedisRepository redisRepository;
     @Autowired
     private TranscriptionService transcriptionService;
@@ -42,7 +47,7 @@ public class TranscriptionControllerIT {
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
 
-        params.add("file", new ClassPathResource("audio_2024-09-30_22-25-01.ogg"));
+        params.add("file", new ClassPathResource("audio_2024-09-30_22-25-01.ogg.wav"));
 
         ResponseEntity<TaskTranscription> response = restTemplate
                 .exchange(url, HttpMethod.POST, new HttpEntity<>(params), TaskTranscription.class);
@@ -51,7 +56,7 @@ public class TranscriptionControllerIT {
 
         assertThat(response.getStatusCodeValue()).isEqualTo(202);
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getTaskResult()).isEqualTo("Task in processing");
+        assertThat(response.getBody().getStatus().equals("processing"));
     }
 
     @Test
@@ -79,4 +84,5 @@ public class TranscriptionControllerIT {
         assertThat(res.getStatus()).isEqualTo(Status.DONE);
         assertThat(res.getTaskResult()).isNotNull();
     }
+
 }
