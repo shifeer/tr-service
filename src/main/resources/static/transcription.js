@@ -10,15 +10,16 @@ async function fetchTranscriptionResult(taskId) {
 
         const data = await response.json();
 
-        if (data.status === 'completed') {
-            document.getElementById('result').textContent = data.taskResult;
-        } else if (data.status === 'processing') {
-            document.getElementById('result').textContent = 'Транскрипция все еще выполняется. Попробуйте позже.';
-        } else if (data.status === 'error') {
-            document.getElementById('result').textContent = 'Произошла ошибка при транскрипции.';
+        // Обрабатываем различные статусы
+        if (data.status === 'DONE') {
+            document.getElementById('result').textContent = data.taskResult; // Отображаем результат
+        } else if (data.status === 'PROCESSING') {
+            document.getElementById('result').textContent = 'Транскрипция все еще выполняется.'; // Транскрипция продолжается
+        } else if (data.status === 'ERROR') {
+            document.getElementById('result').textContent = 'Произошла ошибка при транскрипции.'; // Ошибка
         }
     } catch (error) {
-        document.getElementById('result').textContent = `Ошибка: ${error.message}`;
+        document.getElementById('result').textContent = `Ошибка: ${error.message}`; // Обработка ошибок
     }
 }
 
@@ -38,13 +39,22 @@ async function pollTask(taskId) {
             console.log(`Статус задачи ${taskId}: ${data.status}`);
 
             // Если задача завершена, останавливаем опрос
-            if (data.status === 'done') {
+            if (data.status === 'DONE') {
                 console.log(`Задача ${taskId} завершена. Результат: ${data.taskResult}`);
-                clearInterval(intervalId);
+                document.getElementById('result').textContent = data.taskResult; // Выводим результат на страницу
+                clearInterval(intervalId); // Останавливаем опрос
+            } else if (data.status === 'PROCESSING') {
+                console.log('Транскрипция еще в процессе...');
+                document.getElementById('result').textContent = 'Транскрипция все еще выполняется. Попробуйте позже.'; // Информируем пользователя
+            } else if (data.status === 'ERROR') {
+                console.log('Произошла ошибка при транскрипции.');
+                document.getElementById('result').textContent = 'Произошла ошибка при транскрипции.'; // Ошибка
+                clearInterval(intervalId); // Останавливаем опрос
             }
         } catch (error) {
             console.error(`Ошибка: ${error.message}`);
-            clearInterval(intervalId); // Останавливаем, если ошибка критическая
+            document.getElementById('result').textContent = `Ошибка: ${error.message}`; // Обработка ошибок
+            clearInterval(intervalId); // Останавливаем опрос в случае ошибки
         }
     }, 10000); // Опрос каждые 10 секунд
 }
@@ -55,8 +65,9 @@ const taskId = params.get('taskId');
 
 if (taskId) {
     console.log('taskId из URL:', taskId);
-    pollTask(taskId);
+    pollTask(taskId); // Запускаем опрос статуса задачи
 } else {
-    document.getElementById('result').textContent = 'ID задачи не найден.';
+    document.getElementById('result').textContent = 'ID задачи не найден.'; // Если taskId нет в URL
 }
+
   

@@ -111,7 +111,18 @@ async function sendFileWithLanguage(file, language) {
     });
 
     if (!response.ok) {
-      throw new Error(`Ошибка отправки файла: ${response.statusText}`);
+        // Проверяем код ответа
+        if (response.status === 404) {
+            // Ошибка клиента (не найдено)
+            const errorData = await response.json();
+            throw new Error(`Ошибка: ${errorData.message || 'Ресурс не найден'}`);
+        } else if (response.status === 500) {
+            // Ошибка сервера
+            throw new Error('Ошибка сервера. Пожалуйста, попробуйте позже.');
+        } else {
+            // Для других статусов (например, 400, 401 и т.д.)
+            throw new Error(`Ошибка отправки файла: ${response.statusText}`);
+        }
     }
 
     const responseData = await response.json();
@@ -149,7 +160,7 @@ async function pollTaskStatus(taskId) {
       console.log(`Статус задачи ${taskId}: ${data.status}`);
 
       // Если задача завершена, останавливаем опрос
-      if (data.status === 'done') {
+      if (data.status === 'DONE') {
         console.log(`Задача ${taskId} завершена. Результат: ${data.taskResult}`);
         clearInterval(intervalId);
       }
