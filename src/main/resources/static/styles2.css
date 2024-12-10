@@ -1,0 +1,119 @@
+body {
+    background-color: #2C5451;
+    margin: 0;
+    font-family: 'Inter';
+    color: white;
+}
+
+.transcription {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('/img/sea.jpg') no-repeat center center/cover;
+    color: white;
+    font-family: 'Inter';
+    text-align: center;
+    font-style: normal;
+    font-size: 42px;
+    font-weight: 500;
+}
+
+.transcription-container {
+    width: 100%;
+    max-width: 1840px;
+    background-color: #0000001A; /* Цвет фона с прозрачностью */
+    backdrop-filter: blur(7.73px); /* Эффект размытия фона */
+    padding-bottom: 40px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border-radius: 40px;
+    margin-top: 180px;
+    margin-bottom: 0;
+}
+
+.close-button {
+    position: fixed; /* Используем fixed для размещения кнопки относительно окна */
+    top: 40px;  /* Расстояние от верхней границы */
+    right: 40px; /* Расстояние от правой границы */
+    width: 85px;  /* Размер картинки */
+    height: 85px;  /* Размер картинки */
+    cursor: pointer;
+}
+  
+.close-button img {
+    width: 100%;  /* Картинка растягивается по размеру контейнера */
+    height: 100%;  /* Картинка растягивается по размеру контейнера */
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.file-info h1 {
+    font-size: 42px;
+    color: white;
+    margin-left: 40px;
+}
+
+.transcription-box {
+    margin: 0 40px;
+    max-height: 355px; /* Ограничение высоты контейнера */
+    overflow-y: auto; /* Добавление прокрутки, если текст превышает высоту */
+    word-wrap: break-word; /* Автоматический перенос длинных слов */
+    overflow-wrap: break-word; /* Современное свойство для переноса текста */
+    padding-bottom: 40px;
+    padding-top: -30px;
+}
+
+.transcription-box p {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    white-space: pre-wrap; /* Сохранение пробелов и переносов */
+}
+
+.action-buttons {
+    display: flex;
+    gap: 20px; /* Расстояние между кнопками */
+    margin-right: 40px;
+    margin-left: auto;
+}
+
+.action-btn {
+    background-color: #FFFFFF4D; /* Цвет кнопки */
+    color: white;
+    font-size: 24px;
+    padding: 12px 60px;
+    cursor: pointer;
+    border-radius: 20px;
+    border: none;
+    box-shadow: none;
+}
+
+.action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.horizontal-line {
+    width: calc(100% - 80px); /* Ширина с учетом отступов */
+    height: 3px;
+    background-color: white;
+    margin: 0 auto; /* Центровка */
+    margin-bottom: 20px; /* Отступ от линии до текста "Общая длительность" */
+}
+
+.download-btn {
+    background-color: #66C0B7;
+}
+
+.download-btn:hover {
+    background-color: #019874;
+}
+
