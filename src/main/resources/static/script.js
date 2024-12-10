@@ -31,10 +31,10 @@ const faqItems = document.querySelectorAll('.faq-item');
 faqItems.forEach(item => {
     const toggleButton = item.querySelector('.faq-toggle');
     const answer = item.querySelector('.faq-answer');
-    
+
     toggleButton.addEventListener('click', () => {
         const isActive = item.classList.toggle('active'); // Переключаем класс 'active'
-        
+
         if (isActive) {
             toggleButton.style.backgroundImage = "url('/img/minus.svg')"; // Меняем иконку на минус
             toggleButton.style.opacity = "0.6"; // Устанавливаем прозрачность
@@ -96,77 +96,66 @@ fileInput.addEventListener('change', async () => {
 
 // Функция для отправки файла и языка
 async function sendFileWithLanguage(file, language) {
-    const baseUrl = `http://localhost:8080/api/v1/transcription`;
-    const url = `${baseUrl}?language=${language}`; // Добавляем параметр языка
+  const url = `http://localhost:8080/api/v1/transcription`;
 
-    try {
-        const fileBase64 = await convertFileToBase64(file);
-        const data = { file: fileBase64 };
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('language', language);
 
-        console.log('Отправляемые данные:', JSON.stringify(data));
+  try {
+    console.log('Отправляемые данные:', formData);
 
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-        });
-
-        console.log('Ответ сервера (сырые данные):', response);
-
-        if (!response.ok) {
-            throw new Error(`Ошибка отправки файла: ${response.statusText}`);
-        }
-
-        const responseData = await response.json();
-        console.log('Ответ сервера (парсинг JSON):', responseData);
-
-        const taskId = responseData.taskId;
-        if (!taskId) {
-            throw new Error('Сервер не вернул taskId');
-        }
-
-        console.log('Переход на следующую страницу с taskId:', taskId);
-        window.location.href = `/transcription.html?taskId=${encodeURIComponent(taskId)}&language=${encodeURIComponent(language)}`;
-    } catch (error) {
-        console.error(`Ошибка: ${error.message}`);
-    }
-}
-
-// Преобразование файла в base64
-function convertFileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result.split(',')[1]);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
+    const response = await fetch(url, {
+      method: 'POST',
+      body: formData,
     });
+
+    if (!response.ok) {
+      throw new Error(`Ошибка отправки файла: ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    console.log('Ответ сервера:', responseData);
+
+    const taskId = responseData.taskId;
+    if (!taskId) {
+      throw new Error('Сервер не вернул taskId');
+    }
+
+    // Перенаправляем на URL с параметром языка
+    const redirectUrl = `/transcription.html?taskId=${encodeURIComponent(taskId)}&language=${encodeURIComponent(language)}`;
+    console.log('Переход на следующую страницу:', redirectUrl);
+    window.location.href = redirectUrl;
+  } catch (error) {
+    console.error(`Ошибка: ${error.message}`);
+    throw error;
+  }
 }
 
 // Функция для опроса статуса задачи
 async function pollTaskStatus(taskId) {
-    const statusUrl = `http://localhost:8080/api/v1/transcription/${taskId}`;
+  const statusUrl = `http://localhost:8080/api/v1/transcription/${taskId}`;
 
-    const intervalId = setInterval(async () => {
-        try {
-            const response = await fetch(statusUrl);
+  const intervalId = setInterval(async () => {
+    try {
+      const response = await fetch(statusUrl);
 
-            if (!response.ok) {
-                throw new Error(`Ошибка проверки статуса: ${response.statusText}`);
-            }
+      if (!response.ok) {
+        throw new Error(`Ошибка проверки статуса: ${response.statusText}`);
+      }
 
-            const data = await response.json();
+      const data = await response.json();
 
-            console.log(`Статус задачи ${taskId}: ${data.status}`);
+      console.log(`Статус задачи ${taskId}: ${data.status}`);
 
-            // Если задача завершена, останавливаем опрос
-            if (data.status === 'completed') {
-                console.log(`Задача ${taskId} завершена. Результат: ${data.taskResult}`);
-                clearInterval(intervalId);
-            }
-
-        } catch (error) {
-            console.error(`Ошибка: ${error.message}`);
-            clearInterval(intervalId); // Останавливаем, если ошибка критическая
-        }
-    }, 10000); // Опрос каждые 10 секунд
+      // Если задача завершена, останавливаем опрос
+      if (data.status === 'completed') {
+        console.log(`Задача ${taskId} завершена. Результат: ${data.taskResult}`);
+        clearInterval(intervalId);
+      }
+    } catch (error) {
+      console.error(`Ошибка: ${error.message}`);
+      clearInterval(intervalId); // Останавливаем, если ошибка критическая
+    }
+  }, 10000); // Опрос каждые 10 секунд
 }
