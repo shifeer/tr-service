@@ -30,7 +30,8 @@ public class TranscriptionController {
     private final MultiToSimpleFileService multiToSimpleFileService;
 
     @PostMapping
-    public ResponseEntity<TaskTranscription> doTranscription(@ValidFileFormatOrEmpty @RequestParam("file") MultipartFile multipartFile) {
+    public ResponseEntity<TaskTranscription> doTranscription(@ValidFileFormatOrEmpty @RequestParam("file") MultipartFile multipartFile,
+                                                             @RequestParam("language") String lang) {
 
         String taskId = UUID.randomUUID().toString();
         transcriptionService.doTranscribe(multiToSimpleFileService.multiToFile(multipartFile), taskId);

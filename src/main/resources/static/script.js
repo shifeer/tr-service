@@ -123,7 +123,7 @@ async function sendFileWithLanguage(file, language) {
     }
 
     // Перенаправляем на URL с параметром языка
-    const redirectUrl = `/transcription.html?taskId=${encodeURIComponent(taskId)}&language=${encodeURIComponent(language)}`;
+    const redirectUrl = `/transcription?taskId=${taskId}`;
     console.log('Переход на следующую страницу:', redirectUrl);
     window.location.href = redirectUrl;
   } catch (error) {
@@ -141,7 +141,7 @@ async function pollTaskStatus(taskId) {
       const response = await fetch(statusUrl);
 
       if (!response.ok) {
-        throw new Error(`Ошибка проверки статуса: ${response.statusText}`);
+        throw new Error(`Ошибка проверки статуса: ${response.status}`);
       }
 
       const data = await response.json();
@@ -149,7 +149,7 @@ async function pollTaskStatus(taskId) {
       console.log(`Статус задачи ${taskId}: ${data.status}`);
 
       // Если задача завершена, останавливаем опрос
-      if (data.status === 'completed') {
+      if (data.status === 'done') {
         console.log(`Задача ${taskId} завершена. Результат: ${data.taskResult}`);
         clearInterval(intervalId);
       }
