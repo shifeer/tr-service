@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   <title>Транскрибация аудио в текст</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles2.css">
 </head>
 <body>
     <div class="transcription">
@@ -15,30 +15,25 @@
             <img src="/img/cross.svg" alt="Закрыть" />
         </a>
         <div class="transcription-container">
-            <div class="transcription-header">
-                <h1>
-                    Онлайн преобразование<span class="line-break"> аудио в текст</span>
-                </h1>
-                <div class="horizontal-line"></div>
-                <div class="audio-duration">
-                <span>Общая длительность</span>
-                <span id="audio-duration">00:00:00</span>
+            <!-- Информация о файле и кнопки взаимодействия-->
+            <div class="file-info">
+                <h1>Radiohead - Creep.mp3</h1>
+                <div class="action-buttons">
+                    <button class="action-btn">🛠️ Улучшить текст</button>
+                    <button class="action-btn">📋 Скопировать</button>
+                    <button class="action-btn download-btn">Скачать</button>
                 </div>
             </div>
 
-            <div class="language-selection">
-                <label for="language">Язык речи *</label>
-                <div class="language-buttons" id="language">
-                  <button class="language-btn active" data-lang="ru">Русский</button>
-                  <button class="language-btn" data-lang="en">Английский</button>
-                </div>
-            </div>
+            <div class="horizontal-line"></div>
 
-            <div class="transcription-controls">
-                <button id="start-transcription" class="start-button">Преобразовать в текст</button>
+            <!-- Текст транскрипции -->
+            <div class="transcription-box">
+                <p>
+                    When you were here before. Couldn't look you in the eye. You're just like an angel. Your skin makes me cry. You float like a feather. In a beautiful world. I wish I was special. You're so fucking special. But I'm a creep, I'm a weirdo. What the hell am I doing here? I don't belong here. I don't care if it hurts. I want to have control. I want a perfect body. I want a perfect soul. I want you to notice. When I'm not around. You're so fucking special. I wish I was special. But I'm a creep, I'm a weirdo. What the hell am I doing here? I don't belong here. She's running out again. She's running. She run, run, run, run. Run. Whatever makes you happy. Whatever you want. You're so fucking special. I wish I was special. But I'm a creep. I'm a weirdo. What the hell am I doing here?     I don't belong here. I don't belong here    
+                </p>
             </div>
         </div>
     </div>
-  <script src="/transcription.js"></script>
 </body>
 </html>
