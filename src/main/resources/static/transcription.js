@@ -1,37 +1,34 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const languageButtons = document.querySelectorAll('.language-btn');
-  
-    languageButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        // Убираем класс active у всех кнопок
-        languageButtons.forEach(btn => btn.classList.remove('active'));
-        // Добавляем класс active к нажимаемой кнопке
-        button.classList.add('active');
-      });
-    });
-  });
+async function fetchTranscriptionResult(taskId) {
+            const url = `http://localhost:8080/api/v1/transcription/${encodeURIComponent(taskId)}`;
 
-  document.addEventListener('DOMContentLoaded', () => {
-    // Инициализация длительности аудио (можно заменить на реальную длительность аудиофайла)
-    const audioDurationElement = document.getElementById('audio-duration');
-    let audioDuration = "05:41"; // Это пример, заменить на реальную длительность после загрузки
-  
-    audioDurationElement.textContent = audioDuration;
-  
-    // Функция для обработки кнопки преобразования
-    const startButton = document.getElementById('start-transcription');
-    startButton.addEventListener('click', () => {
-      // Начать процесс транскрибации
-      const language = document.getElementById('language').value;
-      startTranscription(language);
-    });
-  
-    // Функция для начала процесса транскрибации
-    function startTranscription(language) {
-      alert(`Начинается процесс транскрибации для языка: ${language}`);
-  
-      // Здесь можно реализовать дальнейшую логику, например, отправку данных на сервер
-      // Для этого можно использовать fetch или другие методы для работы с сервером
-    }
-  });
+            try {
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`Ошибка получения результата: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                if (data.status === 'completed') {
+                    document.getElementById('result').textContent = data.taskResult;
+                } else if (data.status === 'processing') {
+                    document.getElementById('result').textContent = 'Транскрипция все еще выполняется. Попробуйте позже.';
+                } else if (data.status === 'error') {
+                    document.getElementById('result').textContent = 'Произошла ошибка при транскрипции.';
+                }
+            } catch (error) {
+                document.getElementById('result').textContent = `Ошибка: ${error.message}`;
+            }
+        }
+
+        // Получаем taskId из URL
+        const params = new URLSearchParams(window.location.search);
+        const taskId = params.get('taskId');
+
+        if (taskId) {
+            fetchTranscriptionResult(taskId);
+        } else {
+            document.getElementById('result').textContent = 'ID задачи не найден.';
+        }
   
