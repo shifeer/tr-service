@@ -94,7 +94,7 @@ fileInput.addEventListener('change', () => {
     .then((response) => {
       if (response.ok) {
         // Если файл успешно загружен, переходим на страницу прогресса
-        window.location.href = 'transcription2';
+        window.location.href = 'transcription';
       } else {
         alert('Ошибка загрузки файла на сервер');
       }

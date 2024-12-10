@@ -39,15 +39,15 @@ body {
     font-size: 400px;
     text-align: center;
     font-family: 'Playfair Display', serif;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
 .site-title-o {
     display: inline-block;
-    width: 182px; 
+    width: 182px;
     height: 283px;
     position: relative;
-    top: 70px; 
+    top: 70px;
 }
 
 .site-title-o img {
@@ -59,36 +59,32 @@ body {
 
 .upload-button {
     position: absolute;
-    top: 727px; 
+    top: 727px;
     left: 50%;
     transform: translateX(-50%);
-    padding: 27px 53px; 
-    font-size: 43px; 
-    background-color: #2C5451; 
+    padding: 27px 53px;
+    font-size: 43px;
+    background-color: #2C5451;
     border: none;
-    border-radius: 53px; 
+    border-radius: 53px;
     color: white;
     cursor: pointer;
 }
 
 main {
-    background-image: url('/static/img/sea.jpg');
-    background-size: cover; 
+    background-image: url('/img/sea.jpg');
+    background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     min-height: 100vh;
     margin-bottom: 120px;
 }
 
 
 .upload-button:hover {
-    background-color: #1a3d36; 
+    background-color: #1a3d36;
 }
 
-/* Скрытый input */
-#file-input {
-    display: none;
-}
 /* блок история */
 
 .history {
@@ -133,7 +129,7 @@ main {
     padding: 0;
     margin: 0;
     color: #ffffff;
-    text-decoration: underline; 
+    text-decoration: underline;
     align-self: flex-start;
 }
 
@@ -150,7 +146,7 @@ main {
     max-width: 880px;
     height: auto;
     border-radius: 20px;
-} 
+}
 
 /* блок faq */
 
@@ -217,7 +213,7 @@ main {
 .faq .faq-toggle {
     position: absolute;
     right: 0;
-    background-image: url('/static/img/plus.svg');
+    background-image: url('/img/plus.svg');
     background-size: contain;
     background-repeat: no-repeat;
     width: 58px;
@@ -268,12 +264,12 @@ main {
 }
 
 .faq .faq-item.active .faq-toggle {
-    background-image: url('/static/img/minus.svg'); /* Иконка минус при активном вопросе */
+    background-image: url('/img/minus.svg'); /* Иконка минус при активном вопросе */
     opacity: 0.6; /* Устанавливаем прозрачность */
 }
 
 .faq .faq-item .faq-toggle {
-    background-image: url('/static/img/plus.svg'); /* Иконка плюс по умолчанию */
+    background-image: url('/img/plus.svg'); /* Иконка плюс по умолчанию */
     opacity: 1; /* Полная непрозрачность */
 }
 
@@ -285,7 +281,7 @@ main {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('/static/img/sea.jpg') no-repeat center center/cover;
+    background: url('/img/sea.jpg') no-repeat center center/cover;
     color: white;
     font-family: 'Inter';
     text-align: center;
@@ -306,7 +302,7 @@ main {
     border-radius: 40px;
     margin-top: 230px;
 }
-  
+
 .transcription-header h1 {
     font-size: 64px;
     text-align: center;
@@ -314,53 +310,63 @@ main {
     font-style: normal;
     font-weight: 500;
 }
-  
-.audio-duration {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    margin-left: 40px;
-    margin-right: 40px;
-}
-  
+
 .language-selection {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin-bottom: 60px;
-  }
-  
-  .language-selection label {
+    margin-bottom: 100px;
+}
+
+.language-selection label {
     font-size: 42px;
     color: white;
     margin-left: 40px;
-  }
-  
-  .language-buttons {
-    display: flex;
-    gap: 20px; /* Расстояние между кнопками */
-    margin-right: 40px;
-    margin-left: auto;
-  }
-  
-  .language-btn {
-    background-color: #FFFFFF4D; /* Цвет кнопки */
-    border: 2.67px solid transparent; /* Прозрачная обводка по умолчанию */
+}
+
+.language-dropdown {
+    background-color: #FFFFFF4D; /* Цвет фона самого select */
     color: white;
     font-size: 24px;
-    padding: 12px 60px;
-    cursor: pointer;
+    padding: 12px 40px; /* Центрирование текста */
+    text-align: center; /* Центрирование текста */
+    border: 2.67px solid transparent; /* Прозрачная обводка */
     border-radius: 6px;
-    transition: border-color 0.3s; /* Плавное изменение только обводки */
-  }
-  
-  .language-btn.active {
-    border-color: #FFFFFF; /* Белая обводка для активной кнопки */
-  }
-  
-  .language-btn:hover {
+    margin-left: auto;
+    margin-right: 40px;
+    appearance: none; /* Убираем стрелку браузера */
+    outline: none;
+    cursor: pointer;
+}
+
+.language-dropdown:hover {
     border-color: #FFFFFF; /* Белая обводка при наведении */
-  }  
+}
+
+.language-dropdown:focus {
+    border-color: #FFFFFF; /* Белая обводка при фокусе */
+}
+
+/* Стили для списка option */
+.language-dropdown option {
+    background-color: #353030; /* Черный фон для всех элементов */
+    color: white; /* Белый текст */
+    text-align: center; /* Центрирование текста */
+    padding: 12px; /* Удобный отступ внутри option */
+}
+
+/* Стили для выбранного элемента */
+.language-dropdown option:checked {
+    background-color: #353030; /* Красный фон для выбранного элемента */
+    color: white; /* Белый текст */
+}
+
+/* Стили при наведении на элементы */
+.language-dropdown option:hover {
+    background-color: #474343; /* Серый фон при наведении */
+    color: white; /* Белый текст */
+}
+
 
 .start-button {
     width: 95.5%;
@@ -372,11 +378,11 @@ main {
     border-radius: 20px;
     cursor: pointer;
 }
-  
+
 .start-button:hover {
     background-color: #66C0B7;
 }
-  
+
 .close-button {
     position: fixed; /* Используем fixed для размещения кнопки относительно окна */
     top: 40px;  /* Расстояние от верхней границы */
@@ -385,7 +391,7 @@ main {
     height: 85px;  /* Размер картинки */
     cursor: pointer;
 }
-  
+
 .close-button img {
     width: 100%;  /* Картинка растягивается по размеру контейнера */
     height: 100%;  /* Картинка растягивается по размеру контейнера */
@@ -400,5 +406,39 @@ main {
     height: 3px;
     background-color: white;
     margin: 0 auto; /* Центровка */
-    margin-bottom: 20px; /* Отступ от линии до текста "Общая длительность" */
+    margin-bottom: 80px; /* Отступ от линии до текста "Общая длительность" */
+}
+
+/* МОДАЛЬНОЕ ОКНО */
+
+/* Скрываем модальное окно по умолчанию */
+.modal {
+    display: none; /* Окно скрыто */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0); /* Затемненный фон */
+    z-index: 1000;
+}
+
+/* Кнопка закрытия */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Скрытый input */
+#file-input {
+    display: none;
 }
