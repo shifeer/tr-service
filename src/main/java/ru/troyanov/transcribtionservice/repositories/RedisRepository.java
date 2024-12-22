@@ -3,7 +3,7 @@ package ru.troyanov.transcribtionservice.repositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import ru.troyanov.transcribtionservice.model.Status;
+import ru.troyanov.transcribtionservice.dto.Status;
 import java.time.Duration;
 
 @Component

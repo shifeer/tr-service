@@ -1,4 +1,4 @@
-package ru.troyanov.transcribtionservice.model;
+package ru.troyanov.transcribtionservice.dto;
 
 import java.util.Arrays;
 

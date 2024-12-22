@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.troyanov.transcribtionservice.model.Status;
-import ru.troyanov.transcribtionservice.model.TaskTranscription;
+import ru.troyanov.transcribtionservice.dto.Status;
+import ru.troyanov.transcribtionservice.dto.TaskTranscriptionDTO;
 import ru.troyanov.transcribtionservice.service.StatusTranscriptionHandlerService;
 import ru.troyanov.transcribtionservice.service.TranscriptionService;
 import ru.troyanov.transcribtionservice.validators.ValidFileFormatOrEmpty;
@@ -37,8 +37,8 @@ public class TranscriptionController {
     private Path pathToDir;
 
     @PostMapping
-    public ResponseEntity<TaskTranscription> doTranscription(@ValidFileFormatOrEmpty @RequestParam("file") MultipartFile multipartFile,
-                                                             @RequestParam("language") String lang) {
+    public ResponseEntity<TaskTranscriptionDTO> doTranscription(@ValidFileFormatOrEmpty @RequestParam("file") MultipartFile multipartFile,
+                                                                @RequestParam("language") String lang) {
 
         String taskId = UUID.randomUUID().toString();
         transcriptionService.doTranscribe(multiToFile(multipartFile), taskId);
@@ -47,7 +47,7 @@ public class TranscriptionController {
     }
 
     @GetMapping("/{taskId}")
-    public ResponseEntity<TaskTranscription> getResult(@PathVariable("taskId") String taskId) {
+    public ResponseEntity<TaskTranscriptionDTO> getResult(@PathVariable("taskId") String taskId) {
 
         if (taskId == null) {
             log.warn("Task id is empty");

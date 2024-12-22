@@ -1,4 +1,4 @@
-package ru.troyanov.transcribtionservice.model;
+package ru.troyanov.transcribtionservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TaskTranscription {
+public class TaskTranscriptionDTO {
     private String taskId;
     private Status status;
     private String taskResult;

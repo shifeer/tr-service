@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.vosk.Model;
 import org.vosk.Recognizer;
-import ru.troyanov.transcribtionservice.model.Status;
+import ru.troyanov.transcribtionservice.dto.Status;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
 
 import javax.sound.sampled.AudioInputStream;

@@ -6,7 +6,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -15,9 +14,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import ru.troyanov.transcribtionservice.exception.ErrorDto;
-import ru.troyanov.transcribtionservice.model.Status;
-import ru.troyanov.transcribtionservice.model.TaskTranscription;
+import ru.troyanov.transcribtionservice.dto.Status;
+import ru.troyanov.transcribtionservice.dto.TaskTranscriptionDTO;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
 import ru.troyanov.transcribtionservice.service.StatusTranscriptionHandlerService;
 import ru.troyanov.transcribtionservice.service.TranscriptionService;
@@ -49,8 +47,8 @@ public class TranscriptionControllerIT {
 
         params.add("file", new ClassPathResource("audio_2024-09-30_22-25-01.ogg.wav"));
 
-        ResponseEntity<TaskTranscription> response = restTemplate
-                .exchange(url, HttpMethod.POST, new HttpEntity<>(params), TaskTranscription.class);
+        ResponseEntity<TaskTranscriptionDTO> response = restTemplate
+                .exchange(url, HttpMethod.POST, new HttpEntity<>(params), TaskTranscriptionDTO.class);
 
 
 
@@ -65,20 +63,20 @@ public class TranscriptionControllerIT {
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("file", new ClassPathResource("audio_2024-09-30_22-25-01.ogg"));
-        ResponseEntity<TaskTranscription> response = restTemplate
-                .exchange(url, HttpMethod.POST, new HttpEntity<>(params), TaskTranscription.class);
+        ResponseEntity<TaskTranscriptionDTO> response = restTemplate
+                .exchange(url, HttpMethod.POST, new HttpEntity<>(params), TaskTranscriptionDTO.class);
 
         String taskId = response.getBody().getTaskId();
         String urlTest = "http://localhost:" + port + "/api/v1/transcription/" + taskId;
         RestTemplate restTemplateTest = new RestTemplate();
-        TaskTranscription res = restTemplateTest.getForObject(urlTest, TaskTranscription.class);
+        TaskTranscriptionDTO res = restTemplateTest.getForObject(urlTest, TaskTranscriptionDTO.class);
 
         assertThat(res.getTaskId()).isEqualTo(taskId);
         assertThat(res.getStatus()).isEqualTo(Status.PROCESSING);
 
         while (res.getStatus() == Status.PROCESSING) {
             restTemplateTest = new RestTemplate();
-            res = restTemplateTest.getForObject(urlTest, TaskTranscription.class);
+            res = restTemplateTest.getForObject(urlTest, TaskTranscriptionDTO.class);
         }
 
         assertThat(res.getStatus()).isEqualTo(Status.DONE);

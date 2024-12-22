@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.troyanov.transcribtionservice.dto.RequestTaskImprovementDto;
-import ru.troyanov.transcribtionservice.model.Status;
-import ru.troyanov.transcribtionservice.model.TaskImprovement;
+import ru.troyanov.transcribtionservice.dto.Status;
+import ru.troyanov.transcribtionservice.dto.TaskImprovementDTO;
 import ru.troyanov.transcribtionservice.service.ImprovementTextService;
 import ru.troyanov.transcribtionservice.service.StatusHandler;
 
@@ -21,15 +21,15 @@ import java.util.UUID;
 public class ImprovementController {
 
     private final ImprovementTextService improvementTextService;
-    private final StatusHandler<TaskImprovement> statusHandler;
+    private final StatusHandler<TaskImprovementDTO> statusHandler;
 
-    public ImprovementController(ImprovementTextService improvementTextService, @Qualifier("statusImprovementHandlerService") StatusHandler<TaskImprovement> statusHandler) {
+    public ImprovementController(ImprovementTextService improvementTextService, @Qualifier("statusImprovementHandlerService") StatusHandler<TaskImprovementDTO> statusHandler) {
         this.improvementTextService = improvementTextService;
         this.statusHandler = statusHandler;
     }
 
     @PostMapping
-    public ResponseEntity<TaskImprovement> getImprovementText(@RequestBody RequestTaskImprovementDto imprTextDto) {
+    public ResponseEntity<TaskImprovementDTO> getImprovementText(@RequestBody RequestTaskImprovementDto imprTextDto) {
 
         String taskId = UUID.randomUUID().toString();
         improvementTextService.improvementText(imprTextDto, taskId);
@@ -38,7 +38,7 @@ public class ImprovementController {
     }
 
     @GetMapping("/{taskId}")
-    public ResponseEntity<TaskImprovement> getImprovementText(@PathVariable String taskId) {
+    public ResponseEntity<TaskImprovementDTO> getImprovementText(@PathVariable String taskId) {
         if (taskId == null) {
             log.warn("Task id is empty");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
