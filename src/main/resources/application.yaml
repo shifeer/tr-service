@@ -9,8 +9,8 @@ spring:
       max-request-size: 50MB
 path:
   to:
-    dir: /mnt/sdb3/Downloads/proj/transcription-service/tempAudiofiles/
+    dir: proj/transcription-service/tempAudiofiles/
 vosk:
-  path-model: /mnt/sdb3/Downloads/proj/transcription-service/modelsVosk/vosk-model-ru-0.42
+  path-model: proj/transcription-service/modelsVosk/vosk-model-ru-0.42
 server:
   port: 8080

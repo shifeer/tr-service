@@ -7,20 +7,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   <title>Транскрибация аудио в текст</title>
-  <link rel="stylesheet" href="/static/styles2.css">
+  <link rel="stylesheet" href="/styles2.css">
 </head>
-<body>
+<body id="page-body">
+
+    <!-- Модальное окно для выбора формата -->
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <h2>Выберите формат</h2>
+            <button class="format-btn" data-format="txt">TXT</button>
+            <button class="format-btn" data-format="docx">Word</button>
+            <button class="format-btn" data-format="pdf">PDF</button>
+        </div>
+    </div>
+
     <div class="transcription">
-        <a href="#" class="close-button">
-            <div>На главную</div>>
+
+        <a href="/main" class="close-button">
+            <div>На главную</div>
         </a>
         <div class="transcription-container">
             <!-- Информация о файле и кнопки взаимодействия-->
             <div class="file-info">
-                <h1>Radiohead - Creep.mp3</h1>
+                <h1>Результат транскрибации</h1>
                 <div class="action-buttons">
-                    <button class="action-btn">🛠️ Улучшить текст</button>
-                    <button class="action-btn">📋 Скопировать</button>
+                    <button class="action-btn copy-btn">📋 Скопировать</button>
                     <button class="action-btn download-btn">Скачать</button>
                 </div>
             </div>
@@ -29,12 +40,10 @@
 
             <!-- Текст транскрипции -->
             <div class="transcription-box">
-                <p id="result" class="loading">
-                    Здесь появится ваш текст
-                </p>
+                <p id="result" class="loading">Здесь появится ваш текст</p>
             </div>
         </div>
     </div>
-<script src="/static/transcription.js"></script>
+<script src="/transcription.js"></script>
 </body>
 </html>
