@@ -45,7 +45,7 @@ public class TranscriptionVoskService implements TranscriptionService {
 
     @SneakyThrows(IOException.class)
     private String recognize(File file, String taskId) {
-        try (Model model = new Model(PATH_MODEL);
+        try (Model model = new Model(System.getProperty("user.dir") + PATH_MODEL);
              AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
              Recognizer recognizer = new Recognizer(model, 16000)) {
 
