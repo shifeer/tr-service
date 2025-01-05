@@ -16,18 +16,16 @@ import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.FileAttribute;
 import java.time.LocalDateTime;
 
-import static java.nio.file.Files.createTempFile;
-
 @Service
 public class TXTFileService implements FileService {
 
-    @Value("${}")
+    @Value("${path.to.dir}")
     private Path pathToDir;
 
     @Override
     public File generateFile(String content) {
         LocalDateTime now = LocalDateTime.now();
-        Path path = pathToDir.resolve(pathToDir + now.toString() + ".txt");
+        Path path = pathToDir.resolve(System.getProperty("user.dir") + pathToDir + now + ".txt");
         try {
             Files.writeString(path, content, StandardOpenOption.CREATE);
         } catch (IOException e) {

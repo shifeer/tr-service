@@ -107,14 +107,16 @@ document.querySelectorAll('.format-btn').forEach(button => {
     button.addEventListener('click', async function () {
         const format = this.getAttribute('data-format'); // Получаем формат из атрибута кнопки
         const resultText = document.getElementById('result').textContent;
+        const body = new URLSearchParams();
+        body.append('content', resultText)
 
         try {
-            const response = await fetch('/generate-file', {
+            const response = await fetch(`/file?format=${encodeURIComponent(format)}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify({ text: resultText, format }),
+                body: body.toString(),
             });
 
             if (!response.ok) {
