@@ -15,13 +15,13 @@ import static java.nio.file.Files.write;
 public class MultiToSimpleFileService {
 
     @Value("${path.to.dir}")
-    private Path pathToDir;
+    private String pathToDir;
 
     @SneakyThrows
     public File multiToFile(MultipartFile multipartFile) {
 
         byte[] audioBytes = multipartFile.getBytes();
-        Path file = createTempFile(pathToDir, multipartFile.getOriginalFilename(), "");
+        Path file = createTempFile(Path.of(System.getProperty("user.dir") + pathToDir), multipartFile.getOriginalFilename(), "");
         write(file, audioBytes);
 
         return file.toFile();
