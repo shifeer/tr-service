@@ -45,7 +45,7 @@ async function pollTask(taskId) {
                 clearInterval(intervalId); // Останавливаем опрос
             } else if (data.status === 'PROCESSING') {
                 console.log('Транскрипция еще в процессе...');
-                document.getElementById('result').textContent = 'Транскрипция все еще выполняется. Попробуйте позже.'; // Информируем пользователя
+                document.getElementById('result').textContent = 'Транскрипция всё ещё выполняется.'; // Информируем пользователя
             } else if (data.status === 'ERROR') {
                 console.log('Произошла ошибка при транскрипции.');
                 document.getElementById('result').textContent = 'Произошла ошибка при транскрипции.'; // Ошибка
@@ -70,4 +70,69 @@ if (taskId) {
     document.getElementById('result').textContent = 'ID задачи не найден.'; // Если taskId нет в URL
 }
 
-  
+// кнопка скопировать
+document.querySelector('.copy-btn').addEventListener('click', function() {
+    const resultText = document.getElementById('result').textContent;
+
+    // Используем Clipboard API для копирования текста в буфер обмена
+    navigator.clipboard.writeText(resultText)
+});
+
+// МОДАЛЬНОЕ ОКНО
+
+// Открытие модального окна при нажатии на кнопку "Скачать"
+document.querySelector('.download-btn').addEventListener('click', function() {
+    document.getElementById('downloadModal').style.display = 'block';
+    document.body.classList.add('modal-open'); // Добавляем класс для размытия фона
+});
+
+// Закрытие модального окна при клике за его пределами
+window.addEventListener('click', function(event) {
+    if (event.target === document.getElementById('downloadModal')) {
+        document.getElementById('downloadModal').style.display = 'none';
+        document.body.classList.remove('modal-open'); // Убираем класс для размытия фона
+    }
+});
+
+// Функция для скачивания файла
+function downloadFile(content, filename, mimeType) {
+    const blob = new Blob([content], { type: mimeType });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+}
+
+document.querySelectorAll('.format-btn').forEach(button => {
+    button.addEventListener('click', async function () {
+        const format = this.getAttribute('data-format'); // Получаем формат из атрибута кнопки
+        const resultText = document.getElementById('result').textContent;
+
+        try {
+            const response = await fetch('/generate-file', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: resultText, format }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Ошибка сервера: ${response.statusText}`);
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `transcription.${format}`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+
+            document.getElementById('downloadModal').style.display = 'none'; // Закрываем модальное окно
+        } catch (error) {
+            console.error('Ошибка при скачивании файла:', error);
+            alert('Не удалось скачать файл. Попробуйте позже.');
+        }
+    });
+});

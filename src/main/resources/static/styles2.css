@@ -35,17 +35,27 @@ body {
 }
 
 .close-button {
-    position: fixed; /* Используем fixed для размещения кнопки относительно окна */
+    position: fixed; /* Фиксированное положение относительно окна */
     top: 40px;  /* Расстояние от верхней границы */
     right: 40px; /* Расстояние от правой границы */
-    width: 85px;  /* Размер картинки */
-    height: 85px;  /* Размер картинки */
-    cursor: pointer;
+    width: auto; /* Автоматическая ширина под текст */
+    height: auto; /* Автоматическая высота под текст */
+    padding: 10px 20px; /* Внутренние отступы */
+    background-color: transparent; /* Прозрачный фон */
+    border: 2px solid white; /* Белая рамка */
+    border-radius: 20px;
+    color: white; /* Белый цвет текста */
+    font-family: 'Inter', sans-serif; /* Шрифт Inter */
+    font-size: 24px; /* Размер текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    text-align: center; /* Выравнивание текста */
+    cursor: pointer; /* Указатель при наведении */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Анимация */
 }
-  
-.close-button img {
-    width: 100%;  /* Картинка растягивается по размеру контейнера */
-    height: 100%;  /* Картинка растягивается по размеру контейнера */
+
+.close-button:hover {
+    background-color: white; /* Белый фон при наведении */
+    color: #2C5451; /* Цвет текста при наведении */
 }
 
 .file-info {
@@ -117,3 +127,64 @@ body {
     background-color: #019874;
 }
 
+
+
+/* МОДАЛЬНОЕ ОКНО */
+
+/* Эффект размытия фона при открытом модальном окне */
+body.modal-open {
+    overflow: hidden; /* Отключаем прокрутку на фоне */
+}
+
+/* Модальное окно */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    z-index: 1000; /* Модальное окно поверх контента */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+    backdrop-filter: blur(5px); /* Эффект размытия фона */
+    overflow: auto;
+    padding-top: 60px;
+}
+
+/* Содержимое модального окна */
+.modal-content {
+    background-color: #2D5552;
+    margin: 5% auto;
+    margin-top: 15%;
+    margin-bottom: 5%;
+    padding: 20px;
+    border: 1px solid #8EA5B7;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 20px;
+    font-family: 'Inter';
+    font-size: 36px;
+}
+
+.modal-content h2 {
+    margin: 0;
+    text-align: center; /* Центрирование текста */
+    margin-bottom: 20px; /* Отступ снизу */
+    font-family: 'Inter', sans-serif; /* Шрифт */
+}
+
+.format-btn {
+    background-color: #2D5552;
+    color: white;
+    font-size: 24px;
+    padding: 12px 60px;
+    cursor: pointer;
+    border-radius: 20px;
+    border: 1px solid white; /* Белая рамка */
+    margin: 10px;
+}
+
+.format-btn:hover {
+    background-color: white; /* Белый фон при наведении */
+    color: #2C5451; /* Цвет текста при наведении */
+}
