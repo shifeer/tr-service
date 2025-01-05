@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.vosk.Model;
 import org.vosk.Recognizer;
+import ru.troyanov.transcribtionservice.dto.Language;
 import ru.troyanov.transcribtionservice.dto.Status;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
 
@@ -31,16 +32,18 @@ public class TranscriptionVoskService implements TranscriptionService {
     private String PATH_MODEL;
     private final RedisRepository redisRepository;
     private final ConverterExtensionToWavService converterExtensionService;
+    private final ImprovementTextService improvementTextService;
 
     @Override
     @Async
-    public void doTranscribe(File file, String taskId) {
+    public void doTranscribe(File file, String taskId, Language language) {
         redisRepository.createNewTask(taskId);
         File audioFile = converterExtensionService.convertToWav(file);
-        String recognize = recognize(audioFile, taskId);
-        if (recognize != null) {
-            redisRepository.setResult(taskId, recognize);
+        String result = recognize(audioFile, taskId);
+        if (result != null) {
+            result = improvementTextService.improvementText(result, language);
         }
+        redisRepository.setResult(taskId, result);
     }
 
     @SneakyThrows(IOException.class)
