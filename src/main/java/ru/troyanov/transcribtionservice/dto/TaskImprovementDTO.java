@@ -4,14 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.troyanov.transcribtionservice.model.Status;
+
+import java.util.List;
+import java.util.Map;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class TaskDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class TaskImprovementDTO {
     private String taskId;
     private Status status;
-    private String taskResult;
+    private Map<String, Map<String, List<String>>> potentialErrors;
 }

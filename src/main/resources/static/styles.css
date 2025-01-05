@@ -1,0 +1,444 @@
+body {
+    background-color: #2C5451;
+    margin: 0;
+    font-family: 'Inter';
+    color: white;
+}
+
+.header {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    display: flex;
+    gap: 53px;
+    font-size: 43px;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.header a {
+    text-decoration: none;
+    color: white;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.header a.active {
+    opacity: 1;
+}
+
+.header a:not(.active):hover {
+    opacity: 0.8;
+}
+
+.site-title {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 400px;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    white-space: nowrap;
+}
+
+.site-title-o {
+    display: inline-block;
+    width: 182px;
+    height: 283px;
+    position: relative;
+    top: 70px;
+}
+
+.site-title-o img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.upload-button {
+    position: absolute;
+    top: 727px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 27px 53px;
+    font-size: 43px;
+    background-color: #2C5451;
+    border: none;
+    border-radius: 53px;
+    color: white;
+    cursor: pointer;
+}
+
+main {
+    background-image: url('/img/sea.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin-bottom: 120px;
+}
+
+
+.upload-button:hover {
+    background-color: #1a3d36;
+}
+
+/* блок история */
+
+.history {
+    display: flex;
+    max-width: 1920px;
+    background-color: #2C5451;
+    border-radius: 15px;
+    align-items: center;
+    min-height: 100vh;
+    gap: 93px;
+    margin-bottom: 180px;
+}
+
+.history-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 40px;
+}
+
+.history-content h2 {
+    font-family: 'Inter';
+    font-size: 42px;
+    font-weight: 300;
+    font-style: normal;
+    margin-bottom: 20px;
+    margin-top: 0;
+    padding: 0;
+}
+
+.history-content p {
+    font-family: 'Inter';
+    font-size: 42px;
+    margin-bottom: 300px;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.history-content a {
+    font-size: 42px;
+    padding: 0;
+    margin: 0;
+    color: #ffffff;
+    text-decoration: underline;
+    align-self: flex-start;
+}
+
+.history-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 40px;
+}
+
+.history-image img {
+    width: 100%;
+    max-width: 880px;
+    height: auto;
+    border-radius: 20px;
+}
+
+/* блок faq */
+
+.faq {
+    max-width: 1920px; /* Ограничиваем ширину секции */
+    margin: 0 auto; /* Центрируем секцию */
+    padding: 20px;
+    font-family: 'Inter', sans-serif; /* Применяем шрифт ко всей секции */
+    min-height: 100vh;
+}
+
+.faq h2 {
+    font-size: 43px; /* Размер шрифта заголовка */
+    font-weight: normal; /* Нормальный вес шрифта */
+    margin-bottom: 20px; /* Отступ под заголовком */
+    font-weight: 300;
+}
+
+.faq-container {
+    display: flex; /* Включаем Flexbox */
+    flex-direction: row; /* Элементы в строку */
+    gap: 40px; /* Расстояние между столбцами */
+    justify-content: center; /* Центрируем столбцы внутри секции */
+}
+
+.faq .question-block {
+    width: 900px; /* Фиксированная ширина каждого столбца */
+    display: flex;
+    flex-direction: column; /* Элементы идут в столбик внутри блока */
+    align-items: center; /* Центрируем элементы по горизонтали */
+}
+
+.faq .question-block:first-child img {
+    max-width: 100%; /* Адаптируем картинку под ширину контейнера */
+    height: auto; /* Сохраняем пропорции */
+    border-radius: 15px; /* Для красоты — скругляем углы */
+    background: linear-gradient(0.12deg, #66C0B7, transparent); /* Градиент */
+    border-radius: 80px; /* Скругление углов */
+}
+
+.faq .questions {
+    display: flex; /* Вопросы внутри блока */
+    flex-direction: column; /* Элементы идут в столбик */
+    gap: 15px; /* Расстояние между вопросами */
+    width: 100%; /* Ширина контейнера для вопросов */
+}
+
+.faq .faq-item {
+    font-size: 32px;
+    font-weight: normal;
+    border-top: 2px solid white;
+    padding-top: 18px; /* Отступ сверху от разделяющей линии */
+    position: relative;
+    transition: margin-bottom 0.3s; /* Плавное изменение отступа при развертывании ответа */
+}
+
+.faq .faq-question {
+    display: flex;
+    align-items: center;
+    margin-bottom: 70px; /* Отступ между вопросом и следующей линией по умолчанию */
+    font-weight: 300;
+}
+
+.faq .faq-toggle {
+    position: absolute;
+    right: 0;
+    background-image: url('/img/plus.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 58px;
+    height: 58px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: -18px; /* Отступ между кнопкой и разделяющей линией */
+    transition: opacity 0.3s; /* Плавное изменение прозрачности */
+}
+
+.faq .faq-answer {
+    display: none;
+    font-size: 32px;
+    font-weight: normal;
+    margin-top: 10px;
+    color: white;
+}
+
+.faq .faq-item.active .faq-answer {
+    display: block; /* Показываем ответ, если класс 'active' добавлен */
+}
+
+.faq .faq-item.active .faq-question {
+    margin-bottom: 40px; /* Отступ между вопросом и следующей линией, когда ответ развернут */
+}
+
+
+.faq .faq-answer {
+    display: none; /* Ответ скрыт по умолчанию */
+    font-size: 32px; /* Размер шрифта для ответа */
+    font-weight: normal; /* Нормальный вес шрифта */
+    margin-top: 15px; /* Отступ сверху */
+    color: white; /* Белый цвет для текста ответа */
+}
+
+
+.faq img:last-child {
+    margin-top: 20px; /* Отступ сверху для второй картинки */
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.faq img:last-child {
+    background: linear-gradient(0.12deg, #66C0B7, transparent); /* Градиент */
+    border-radius: 80px; /* Скругление углов */
+}
+
+.faq .faq-item.active .faq-toggle {
+    background-image: url('/img/minus.svg'); /* Иконка минус при активном вопросе */
+    opacity: 0.6; /* Устанавливаем прозрачность */
+}
+
+.faq .faq-item .faq-toggle {
+    background-image: url('/img/plus.svg'); /* Иконка плюс по умолчанию */
+    opacity: 1; /* Полная непрозрачность */
+}
+
+/* страница транскрибации */
+.transcription {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('/img/sea.jpg') no-repeat center center/cover;
+    color: white;
+    font-family: 'Inter';
+    text-align: center;
+    font-style: normal;
+    font-size: 42px;
+    font-weight: 500;
+}
+
+.transcription-container {
+    width: 100%;
+    max-width: 1840px;
+    margin: 50px auto;
+    background-color: #0000001A; /* Цвет фона с прозрачностью */
+    backdrop-filter: blur(7.73px); /* Эффект размытия фона */
+    padding-bottom: 40px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border-radius: 40px;
+    margin-top: 230px;
+}
+
+.transcription-header h1 {
+    font-size: 64px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.language-selection {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 100px;
+}
+
+.language-selection label {
+    font-size: 42px;
+    color: white;
+    margin-left: 40px;
+}
+
+.language-dropdown {
+    background-color: #FFFFFF4D; /* Цвет фона самого select */
+    color: white;
+    font-size: 24px;
+    padding: 12px 40px; /* Центрирование текста */
+    text-align: center; /* Центрирование текста */
+    border: 2.67px solid transparent; /* Прозрачная обводка */
+    border-radius: 6px;
+    margin-left: auto;
+    margin-right: 40px;
+    appearance: none; /* Убираем стрелку браузера */
+    outline: none;
+    cursor: pointer;
+}
+
+.language-dropdown:hover {
+    border-color: #FFFFFF; /* Белая обводка при наведении */
+}
+
+.language-dropdown:focus {
+    border-color: #FFFFFF; /* Белая обводка при фокусе */
+}
+
+/* Стили для списка option */
+.language-dropdown option {
+    background-color: #353030; /* Черный фон для всех элементов */
+    color: white; /* Белый текст */
+    text-align: center; /* Центрирование текста */
+    padding: 12px; /* Удобный отступ внутри option */
+}
+
+/* Стили для выбранного элемента */
+.language-dropdown option:checked {
+    background-color: #353030; /* Красный фон для выбранного элемента */
+    color: white; /* Белый текст */
+}
+
+/* Стили при наведении на элементы */
+.language-dropdown option:hover {
+    background-color: #474343; /* Серый фон при наведении */
+    color: white; /* Белый текст */
+}
+
+
+.start-button {
+    width: 95.5%;
+    padding: 17.5px;
+    background-color: #66C0B7;
+    color: white;
+    font-size: 48px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.start-button:hover {
+    background-color: #66C0B7;
+}
+
+.close-button {
+    position: fixed; /* Используем fixed для размещения кнопки относительно окна */
+    top: 40px;  /* Расстояние от верхней границы */
+    right: 40px; /* Расстояние от правой границы */
+    width: 85px;  /* Размер картинки */
+    height: 85px;  /* Размер картинки */
+    cursor: pointer;
+}
+
+.close-button img {
+    width: 100%;  /* Картинка растягивается по размеру контейнера */
+    height: 100%;  /* Картинка растягивается по размеру контейнера */
+}
+
+.line-break {
+    display: block; /* Принудительный перенос строки */
+}
+
+.horizontal-line {
+    width: calc(100% - 80px); /* Ширина с учетом отступов */
+    height: 3px;
+    background-color: white;
+    margin: 0 auto; /* Центровка */
+    margin-bottom: 80px; /* Отступ от линии до текста "Общая длительность" */
+}
+
+/* МОДАЛЬНОЕ ОКНО */
+
+/* Скрываем модальное окно по умолчанию */
+.modal {
+    display: none; /* Окно скрыто */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0); /* Затемненный фон */
+    z-index: 1000;
+}
+
+/* Кнопка закрытия */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Скрытый input */
+#file-input {
+    display: none;
+}
