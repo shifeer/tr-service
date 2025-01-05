@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.troyanov.transcribtionservice.dto.Language;
 import ru.troyanov.transcribtionservice.dto.Status;
 import ru.troyanov.transcribtionservice.dto.TaskTranscriptionDTO;
 import ru.troyanov.transcribtionservice.service.StatusTranscriptionHandlerService;
@@ -18,6 +19,7 @@ import ru.troyanov.transcribtionservice.validators.ValidFileFormatOrEmpty;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.UUID;
 
 import static java.nio.file.Files.createTempFile;
@@ -40,8 +42,13 @@ public class TranscriptionController {
     public ResponseEntity<TaskTranscriptionDTO> doTranscription(@ValidFileFormatOrEmpty @RequestParam("file") MultipartFile multipartFile,
                                                                 @RequestParam("language") String lang) {
 
+        Optional<Language> language = Language.fromValue(lang);
+        if (language.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         String taskId = UUID.randomUUID().toString();
-        transcriptionService.doTranscribe(multiToFile(multipartFile), taskId);
+        transcriptionService.doTranscribe(multiToFile(multipartFile), taskId, language.get());
 
         return statusTranscriptionHandlerService.getResponse(Status.PROCESSING, taskId);
     }
