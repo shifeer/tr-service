@@ -40,8 +40,10 @@ async function pollTask(taskId) {
 
             // Если задача завершена, останавливаем опрос
             if (data.status === 'DONE') {
-                console.log(`Задача ${taskId} завершена. Результат: ${data.taskResult}`);
-                document.getElementById('result').textContent = data.taskResult; // Выводим результат на страницу
+                const resultElement = document.getElementById('result');
+                resultElement.textContent = data.taskResult; // Отображаем результат
+                resultElement.classList.remove('loading'); // Убираем класс "loading", если нужен
+                resultElement.setAttribute('contenteditable', 'true'); // Делаем текст редактируемым
                 clearInterval(intervalId); // Останавливаем опрос
             } else if (data.status === 'PROCESSING') {
                 console.log('Транскрипция еще в процессе...');
@@ -138,3 +140,4 @@ document.querySelectorAll('.format-btn').forEach(button => {
         }
     });
 });
+
