@@ -61,7 +61,7 @@ public class TranscriptionController {
     private File multiToFile(MultipartFile multipartFile) {
 
         byte[] audioBytes = multipartFile.getBytes();
-        Path file = createTempFile(pathToDir, multipartFile.getOriginalFilename(), "");
+        Path file = createTempFile(Path.of(System.getProperty("user.dir") + pathToDir), multipartFile.getOriginalFilename(), "");
         write(file, audioBytes);
 
         return file.toFile();
