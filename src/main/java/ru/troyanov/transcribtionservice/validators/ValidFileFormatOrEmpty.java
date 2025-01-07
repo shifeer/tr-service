@@ -18,5 +18,5 @@ public @interface ValidFileFormatOrEmpty {
 
     Class<? extends Payload>[] payload() default {};
 
-    String[] allowedFormats() default {"wav", "mp3", "wave", "ogg"};
+    String[] allowedFormats() default {"wav", "mp3", "wave", "ogg", "mp4"};
 }

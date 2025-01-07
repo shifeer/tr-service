@@ -20,7 +20,7 @@ target/
 *.ipr
 
 /modelsVosk/
-/tempAudiofiles/
+/temp/
 
 
 ### NetBeans ###
