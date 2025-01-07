@@ -15,13 +15,14 @@ import java.time.LocalDateTime;
 @Service
 public class TXTFileService implements FileService {
 
-    @Value("${path.to.dir}")
+    @Value("#{systemProperties['user.dir'] + '${path.to.dir}'}")
     private Path pathToDir;
 
     @Override
     public File generateFile(String content) {
         LocalDateTime now = LocalDateTime.now();
-        Path path = pathToDir.resolve(System.getProperty("user.dir") + pathToDir + now + ".txt");
+        Path path = pathToDir.resolve(now + ".txt");
+
         try {
             Files.writeString(path, content, StandardOpenOption.CREATE);
         } catch (IOException e) {

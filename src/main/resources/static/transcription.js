@@ -111,7 +111,7 @@ document.querySelectorAll('.format-btn').forEach(button => {
         body.append('content', resultText)
 
         try {
-            const response = await fetch(`/file?format=${encodeURIComponent(format)}`, {
+            const response = await fetch(`/files?format=${encodeURIComponent(format)}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
