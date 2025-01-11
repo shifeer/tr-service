@@ -48,7 +48,7 @@ public class TranscriptionController {
         }
 
         String taskId = UUID.randomUUID().toString();
-        transcriptionService.doTranscribe(multiToFile(multipartFile), taskId, language.get());
+        transcriptionService.transcribeFile(multiToFile(multipartFile), taskId, language.get());
 
         return statusTranscriptionHandlerService.getResponse(Status.PROCESSING, taskId);
     }

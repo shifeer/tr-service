@@ -13,4 +13,8 @@ public class Controller {
     public String loading(@RequestParam(name = "taskId", required = false) String taskId) {
         return "transcription";
     }
+    @GetMapping("/socket")
+    public String socket() {
+        return "socket";
+    }
 }
