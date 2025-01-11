@@ -96,7 +96,7 @@ fileInput.addEventListener('change', async () => {
 
 // Функция для отправки файла и языка
 async function sendFileWithLanguage(file, language) {
-  const url = `http://localhost:8080/api/v1/transcription`;
+  const url = `/api/v1/transcription`;
 
   const formData = new FormData();
   formData.append('file', file);
@@ -145,7 +145,7 @@ async function sendFileWithLanguage(file, language) {
 
 // Функция для опроса статуса задачи
 async function pollTaskStatus(taskId) {
-  const statusUrl = `http://localhost:8080/api/v1/transcription/${taskId}`;
+  const statusUrl = `/api/v1/transcription/${taskId}`;
 
   const intervalId = setInterval(async () => {
     try {

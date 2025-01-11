@@ -1,5 +1,5 @@
 async function fetchTranscriptionResult(taskId) {
-    const url = `http://localhost:8080/api/v1/transcription/${encodeURIComponent(taskId)}`;
+    const url = `/api/v1/transcription/${encodeURIComponent(taskId)}`;
 
     try {
         const response = await fetch(url);
@@ -24,7 +24,7 @@ async function fetchTranscriptionResult(taskId) {
 }
 
 async function pollTask(taskId) {
-    const url = `http://localhost:8080/api/v1/transcription/${encodeURIComponent(taskId)}`;
+    const url = `http://192.168.1.149:8080/api/v1/transcription/${encodeURIComponent(taskId)}`;
 
     const intervalId = setInterval(async () => {
         try {

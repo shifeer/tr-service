@@ -19,6 +19,7 @@ import ru.troyanov.transcribtionservice.service.TXTFileService;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -41,14 +42,14 @@ public class FileController {
     @PostMapping
     public ResponseEntity<Resource> getFile(String content, @RequestParam Format format) throws IOException {
         File result = fileServices.get(format).generateFile(content);
-        Resource resource = null;
 
         try {
-            resource = new UrlResource(result.toURI());
+            Resource resource = new UrlResource(result.toURI());
+            return new ResponseEntity<>(resource, HttpStatus.OK);
         } catch (MalformedURLException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error with work file");
+        } finally {
+            Files.delete(result.toPath());
         }
-
-        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 }
