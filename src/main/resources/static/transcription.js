@@ -24,7 +24,7 @@ async function fetchTranscriptionResult(taskId) {
 }
 
 async function pollTask(taskId) {
-    const url = `http://192.168.1.149:8080/api/v1/transcription/${encodeURIComponent(taskId)}`;
+    const url = `/api/v1/transcription/${encodeURIComponent(taskId)}`;
 
     const intervalId = setInterval(async () => {
         try {
@@ -58,7 +58,7 @@ async function pollTask(taskId) {
             document.getElementById('result').textContent = `Ошибка: ${error.message}`; // Обработка ошибок
             clearInterval(intervalId); // Останавливаем опрос в случае ошибки
         }
-    }, 10000); // Опрос каждые 10 секунд
+    }, 3000); // Опрос каждые 3 секунды
 }
 
 // Получаем taskId из URL

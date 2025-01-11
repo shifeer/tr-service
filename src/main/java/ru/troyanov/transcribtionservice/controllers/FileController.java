@@ -48,8 +48,6 @@ public class FileController {
             return new ResponseEntity<>(resource, HttpStatus.OK);
         } catch (MalformedURLException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error with work file");
-        } finally {
-            Files.delete(result.toPath());
         }
     }
 }
