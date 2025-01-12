@@ -15,11 +15,13 @@ import ru.troyanov.transcribtionservice.service.DOCXFileService;
 import ru.troyanov.transcribtionservice.service.FileService;
 import ru.troyanov.transcribtionservice.service.PDFileService;
 import ru.troyanov.transcribtionservice.service.TXTFileService;
+import ru.troyanov.transcribtionservice.workers.RedundantDataDeleter;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -40,7 +42,7 @@ public class FileController {
     }
 
     @PostMapping
-    public ResponseEntity<Resource> getFile(String content, @RequestParam Format format) throws IOException {
+    public ResponseEntity<Resource> getFile(String content, @RequestParam Format format) {
         File result = fileServices.get(format).generateFile(content);
 
         try {
@@ -48,6 +50,8 @@ public class FileController {
             return new ResponseEntity<>(resource, HttpStatus.OK);
         } catch (MalformedURLException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error with work file");
+        } finally {
+            RedundantDataDeleter.putPath(result.toPath());
         }
     }
 }
