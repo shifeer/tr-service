@@ -28,7 +28,7 @@ import static java.nio.file.Files.delete;
 @RequiredArgsConstructor
 public class TranscriptionVoskService implements TranscriptionService {
 
-    @Value("${vosk.path-model}")
+    @Value("#{systemProperties['user.dir'] + '${vosk.path-model}'}")
     private String PATH_MODEL;
     private final RedisRepository redisRepository;
     private final ConverterExtensionToWavService converterExtensionService;
@@ -55,21 +55,15 @@ public class TranscriptionVoskService implements TranscriptionService {
              recognizer;
              AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)))) {
 
-            StringBuilder sb = new StringBuilder();
             int nbytes;
             byte[] b = new byte[4096];
 
             while ((nbytes = ais.read(b)) > 0) {
-                if (recognizer.acceptWaveForm(b, nbytes)) {
-                    sb.append(extractTextFromJson(recognizer.getResult())).append(" ");
-                }
+                recognizer.acceptWaveForm(b, nbytes);
             }
 
-            sb.append(extractTextFromJson(recognizer.getFinalResult()));
-
             log.info("{} is transcribed", file.getAbsolutePath());
-
-            return sb.toString();
+            return extractTextFromJson(recognizer.getFinalResult());
 
         } catch (UnsupportedAudioFileException e) {
             log.warn("Error for {}", file.getName());
@@ -85,7 +79,7 @@ public class TranscriptionVoskService implements TranscriptionService {
     }
 
     private Model getModel() throws IOException {
-        return new Model(System.getProperty("user.dir") + PATH_MODEL);
+        return new Model(PATH_MODEL);
     }
 
     private String extractTextFromJson(String jsonString) {

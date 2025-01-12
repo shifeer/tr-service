@@ -1,10 +1,8 @@
 package ru.troyanov.transcribtionservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -13,48 +11,43 @@ import org.springframework.web.socket.handler.BinaryWebSocketHandler;
 import org.vosk.Model;
 import org.vosk.Recognizer;
 
-import java.io.ByteArrayInputStream;
+import java.nio.ByteBuffer;
 
+@Slf4j
 @RequiredArgsConstructor
 public class VoiceWebSocketHandler extends BinaryWebSocketHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(VoiceWebSocketHandler.class);
     private final String PATH_MODEL;
     private Model model;
+    private Recognizer recognizer;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        model = new Model(System.getProperty("user.dir") + PATH_MODEL);
+        model = new Model(PATH_MODEL);
+        recognizer = new Recognizer(model, 16000);
+        log.info("Voice websocket connection established");
     }
 
     @Override
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
+        log.info("Voice websocket message received");
         processAudioData(session, message);
     }
 
     void processAudioData(WebSocketSession session, BinaryMessage message) throws Exception {
-        byte[] audioData = message.getPayload().array();
-        StringBuilder sb = new StringBuilder();
-
-        try (Recognizer recognizer = new Recognizer(model, 16000);
-             ByteArrayInputStream audioStream = new ByteArrayInputStream(audioData)) {
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-
-            while ((bytesRead = audioStream.read(buffer)) != -1) {
-                if (recognizer.acceptWaveForm(buffer, bytesRead)) {
-                    sb.append(extractTextFromJson(recognizer.getResult())).append(" ");
-                    System.out.println(sb.toString());
-                    session.sendMessage(new TextMessage(sb.toString()));
-                }
-            }
-        }
+        ByteBuffer buffer = message.getPayload();
+        recognizer.acceptWaveForm(buffer.array(), buffer.limit());
+        String result = extractTextFromJson(recognizer.getResult());
+        session.sendMessage(new TextMessage(result));
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+        recognizer.close();
         model.close();
+        recognizer = null;
         model = null;
+        log.info("Voice websocket connection closed");
     }
 
     private String extractTextFromJson(String jsonString) {
