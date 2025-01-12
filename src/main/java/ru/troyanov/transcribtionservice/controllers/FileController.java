@@ -51,7 +51,7 @@ public class FileController {
         } catch (MalformedURLException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error with work file");
         } finally {
-            Files.delete(result.toPath());
+            RedundantDataDeleter.putPath(result.toPath());
         }
     }
 }
