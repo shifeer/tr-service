@@ -12,6 +12,7 @@ import org.vosk.Recognizer;
 import ru.troyanov.transcribtionservice.dto.Language;
 import ru.troyanov.transcribtionservice.dto.Status;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
+import ru.troyanov.transcribtionservice.workers.RedundantDataDeleter;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -70,7 +71,7 @@ public class TranscriptionVoskService implements TranscriptionService {
             redisRepository.setStatusError(taskId, Status.ERROR);
             return null;
         } finally {
-            delete(file.toPath());
+            RedundantDataDeleter.putPath(file.toPath());
         }
     }
 
