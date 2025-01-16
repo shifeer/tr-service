@@ -1,21 +1,14 @@
 package ru.troyanov.transcribtionservice.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.jetbrains.annotations.NotNull;
 import org.languagetool.JLanguageTool;
 import org.languagetool.Languages;
 import org.languagetool.rules.RuleMatch;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import ru.troyanov.transcribtionservice.dto.Language;
-import ru.troyanov.transcribtionservice.repositories.RedisRepository;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +28,6 @@ public class ImprovementTextService {
                 String replacement = suggestedReplacements.get(0);
                 correctText.replace(match.getFromPos() + offset, match.getToPos() + offset, replacement);
                 offset += replacement.length() - (match.getToPos() - match.getFromPos());
-            } else {
-                System.out.println(match.getMessage());
             }
         }
         return correctText.toString();

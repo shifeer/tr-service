@@ -1,5 +1,5 @@
 async function fetchTranscriptionResult(taskId) {
-    const url = `http://localhost:8080/api/v1/transcription/${encodeURIComponent(taskId)}`;
+    const url = `/api/v1/transcription/${encodeURIComponent(taskId)}`;
 
     try {
         const response = await fetch(url);
@@ -24,7 +24,7 @@ async function fetchTranscriptionResult(taskId) {
 }
 
 async function pollTask(taskId) {
-    const url = `http://localhost:8080/api/v1/transcription/${encodeURIComponent(taskId)}`;
+    const url = `/api/v1/transcription/${encodeURIComponent(taskId)}`;
 
     const intervalId = setInterval(async () => {
         try {
@@ -40,8 +40,10 @@ async function pollTask(taskId) {
 
             // Если задача завершена, останавливаем опрос
             if (data.status === 'DONE') {
-                console.log(`Задача ${taskId} завершена. Результат: ${data.taskResult}`);
-                document.getElementById('result').textContent = data.taskResult; // Выводим результат на страницу
+                const resultElement = document.getElementById('result');
+                resultElement.textContent = data.taskResult; // Отображаем результат
+                resultElement.classList.remove('loading'); // Убираем класс "loading", если нужен
+                resultElement.setAttribute('contenteditable', 'true'); // Делаем текст редактируемым
                 clearInterval(intervalId); // Останавливаем опрос
             } else if (data.status === 'PROCESSING') {
                 console.log('Транскрипция еще в процессе...');
@@ -56,7 +58,7 @@ async function pollTask(taskId) {
             document.getElementById('result').textContent = `Ошибка: ${error.message}`; // Обработка ошибок
             clearInterval(intervalId); // Останавливаем опрос в случае ошибки
         }
-    }, 10000); // Опрос каждые 10 секунд
+    }, 3000); // Опрос каждые 3 секунды
 }
 
 // Получаем taskId из URL
@@ -111,7 +113,7 @@ document.querySelectorAll('.format-btn').forEach(button => {
         body.append('content', resultText)
 
         try {
-            const response = await fetch(`/file?format=${encodeURIComponent(format)}`, {
+            const response = await fetch(`/files?format=${encodeURIComponent(format)}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -138,3 +140,4 @@ document.querySelectorAll('.format-btn').forEach(button => {
         }
     });
 });
+

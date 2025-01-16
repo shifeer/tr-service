@@ -35,7 +35,7 @@ public class TranscriptionController {
 
     private final TranscriptionService transcriptionService;
     private final StatusTranscriptionHandlerService statusTranscriptionHandlerService;
-    @Value("${path.to.dir}")
+    @Value("#{systemProperties['user.dir'] + '${path.to.dir}'}")
     private Path pathToDir;
 
     @PostMapping
@@ -48,7 +48,7 @@ public class TranscriptionController {
         }
 
         String taskId = UUID.randomUUID().toString();
-        transcriptionService.doTranscribe(multiToFile(multipartFile), taskId, language.get());
+        transcriptionService.transcribeFile(multiToFile(multipartFile), taskId, language.get());
 
         return statusTranscriptionHandlerService.getResponse(Status.PROCESSING, taskId);
     }
@@ -68,7 +68,7 @@ public class TranscriptionController {
     private File multiToFile(MultipartFile multipartFile) {
 
         byte[] audioBytes = multipartFile.getBytes();
-        Path file = createTempFile(Path.of(System.getProperty("user.dir") + pathToDir), multipartFile.getOriginalFilename(), "");
+        Path file = createTempFile(pathToDir, multipartFile.getOriginalFilename(), "");
         write(file, audioBytes);
 
         return file.toFile();

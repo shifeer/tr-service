@@ -9,7 +9,7 @@ spring:
       max-request-size: 100MB
 path:
   to:
-    dir: /temp/
+    dir: /temp
 vosk:
   path-model: /modelsVosk/vosk-model-ru-0.42
 server:

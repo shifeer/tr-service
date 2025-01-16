@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.troyanov.transcribtionservice.exception.ConvertExtensionToWavException;
+import ru.troyanov.transcribtionservice.workers.RedundantDataDeleter;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -13,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -43,11 +45,11 @@ public class ConverterExtensionToWavService {
         int exitCode = process.waitFor();
 
         if (exitCode == 0) {
-            Files.delete(audioFile.toPath());
+            RedundantDataDeleter.putPath(audioFile.toPath());
             return resFile;
         } else {
             log.error("{} converted failed", audioFile.getAbsolutePath());
-            Files.delete(audioFile.toPath());
+            RedundantDataDeleter.putPath(audioFile.toPath());
             throw new ConvertExtensionToWavException("Failed converted file to \"WAV, MONO, 16KHz\"");
         }
     }

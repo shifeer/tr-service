@@ -24,8 +24,8 @@ body {
 .transcription-container {
     width: 100%;
     max-width: 1840px;
-    background-color: #0000001A; /* Цвет фона с прозрачностью */
-    backdrop-filter: blur(7.73px); /* Эффект размытия фона */
+    background-color: #2C545166; /* Цвет фона с прозрачностью */
+    backdrop-filter: blur(40px); /* Эффект размытия фона */
     padding-bottom: 40px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     position: relative;
@@ -81,13 +81,27 @@ body {
     padding-top: -30px;
 }
 
-.transcription-box p {
+/* ТЕКСТ ТРАНСКРИБАЦИИ */
+
+.transcription-box div {
     margin: 0;
     font-size: 32px;
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.8);
     white-space: pre-wrap; /* Сохранение пробелов и переносов */
+    outline: none; /* Убирает рамку при редактировании */
 }
+
+.transcription-box div[contenteditable="true"] {
+    cursor: text;
+}
+
+.transcription-box div[contenteditable="true"]:focus {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 4px;
+    border-radius: 4px;
+}
+
 
 .action-buttons {
     display: flex;
