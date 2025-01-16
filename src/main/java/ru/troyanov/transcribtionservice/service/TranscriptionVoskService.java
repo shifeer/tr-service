@@ -12,6 +12,7 @@ import org.vosk.Recognizer;
 import ru.troyanov.transcribtionservice.dto.Language;
 import ru.troyanov.transcribtionservice.dto.Status;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
+import ru.troyanov.transcribtionservice.workers.RedundantDataDeleter;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -28,8 +29,8 @@ import static java.nio.file.Files.delete;
 @RequiredArgsConstructor
 public class TranscriptionVoskService implements TranscriptionService {
 
-    @Value("${vosk.path-model}")
-    private String PATH_MODEL;
+    @Value("#{systemProperties['user.dir'] + '${vosk.path-model}'}")
+    private String PATH_TO_MODEL;
     private final RedisRepository redisRepository;
     private final ConverterExtensionToWavService converterExtensionService;
     private final ImprovementTextService improvementTextService;
@@ -48,7 +49,7 @@ public class TranscriptionVoskService implements TranscriptionService {
 
     @SneakyThrows(IOException.class)
     private String recognize(File file, String taskId) {
-        try (Model model = new Model(System.getProperty("user.dir") + PATH_MODEL);
+        try (Model model = new Model(PATH_TO_MODEL);
              AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
              Recognizer recognizer = new Recognizer(model, 16000)) {
 
@@ -73,7 +74,7 @@ public class TranscriptionVoskService implements TranscriptionService {
             redisRepository.setStatusError(taskId, Status.ERROR);
             return null;
         } finally {
-            delete(file.toPath());
+            RedundantDataDeleter.putPath(file.toPath());
         }
     }
 
