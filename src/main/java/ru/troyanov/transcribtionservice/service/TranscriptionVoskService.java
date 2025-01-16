@@ -22,8 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import static java.nio.file.Files.delete;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
