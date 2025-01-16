@@ -37,10 +37,10 @@ public class TranscriptionVoskService implements TranscriptionService {
 
     @Override
     @Async
-    public void doTranscribe(File file, String taskId, Language language) {
+    public void transcribeFile(File file, String taskId, Language language) {
         redisRepository.createNewTask(taskId);
         File audioFile = converterExtensionService.convertToWav(file);
-        String result = recognize(audioFile, taskId);
+        String result = recognizeFile(audioFile, taskId);
         if (result != null) {
             result = improvementTextService.improvementText(result, language);
         }
@@ -48,26 +48,23 @@ public class TranscriptionVoskService implements TranscriptionService {
     }
 
     @SneakyThrows(IOException.class)
-    private String recognize(File file, String taskId) {
-        try (Model model = new Model(PATH_TO_MODEL);
-             AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
-             Recognizer recognizer = new Recognizer(model, 16000)) {
+    private String recognizeFile(File file, String taskId) {
+        Model model = getModel();
+        Recognizer recognizer = getRecognizer(model);
 
-            StringBuilder sb = new StringBuilder();
+        try (model;
+             recognizer;
+             AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+
             int nbytes;
             byte[] b = new byte[4096];
 
             while ((nbytes = ais.read(b)) > 0) {
-                if (recognizer.acceptWaveForm(b, nbytes)) {
-                    sb.append(extractTextFromJson(recognizer.getResult())).append(" ");
-                }
+                recognizer.acceptWaveForm(b, nbytes);
             }
 
-            sb.append(extractTextFromJson(recognizer.getFinalResult()));
-
             log.info("{} is transcribed", file.getAbsolutePath());
-
-            return sb.toString();
+            return extractTextFromJson(recognizer.getFinalResult());
 
         } catch (UnsupportedAudioFileException e) {
             log.warn("Error for {}", file.getName());
@@ -78,9 +75,16 @@ public class TranscriptionVoskService implements TranscriptionService {
         }
     }
 
+    private Recognizer getRecognizer(Model model) throws IOException {
+        return new Recognizer(model, 16000);
+    }
+
+    private Model getModel() throws IOException {
+        return new Model(PATH_TO_MODEL);
+    }
+
     private String extractTextFromJson(String jsonString) {
         JSONObject jsonObject = new JSONObject(jsonString);
         return jsonObject.optString("text");
     }
 }
-
