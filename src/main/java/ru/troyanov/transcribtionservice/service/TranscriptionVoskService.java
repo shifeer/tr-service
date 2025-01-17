@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.vosk.Model;
@@ -12,6 +11,7 @@ import org.vosk.Recognizer;
 import ru.troyanov.transcribtionservice.dto.Language;
 import ru.troyanov.transcribtionservice.dto.Status;
 import ru.troyanov.transcribtionservice.repositories.RedisRepository;
+import ru.troyanov.transcribtionservice.utils.LanguageVoskModels;
 import ru.troyanov.transcribtionservice.workers.RedundantDataDeleter;
 
 import javax.sound.sampled.AudioInputStream;
@@ -22,15 +22,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import static java.nio.file.Files.delete;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class TranscriptionVoskService implements TranscriptionService {
 
-    @Value("#{systemProperties['user.dir'] + '${vosk.path-model}'}")
-    private String PATH_TO_MODEL;
+    private final LanguageVoskModels languageVoskModels;
     private final RedisRepository redisRepository;
     private final ConverterExtensionToWavService converterExtensionService;
     private final ImprovementTextService improvementTextService;
@@ -40,7 +37,7 @@ public class TranscriptionVoskService implements TranscriptionService {
     public void transcribeFile(File file, String taskId, Language language) {
         redisRepository.createNewTask(taskId);
         File audioFile = converterExtensionService.convertToWav(file);
-        String result = recognizeFile(audioFile, taskId);
+        String result = recognizeFile(audioFile, taskId, language);
         if (result != null) {
             result = improvementTextService.improvementText(result, language);
         }
@@ -48,8 +45,8 @@ public class TranscriptionVoskService implements TranscriptionService {
     }
 
     @SneakyThrows(IOException.class)
-    private String recognizeFile(File file, String taskId) {
-        Model model = getModel();
+    private String recognizeFile(File file, String taskId, Language language) {
+        Model model = getModel(language);
         Recognizer recognizer = getRecognizer(model);
 
         try (model;
@@ -79,8 +76,8 @@ public class TranscriptionVoskService implements TranscriptionService {
         return new Recognizer(model, 16000);
     }
 
-    private Model getModel() throws IOException {
-        return new Model(PATH_TO_MODEL);
+    private Model getModel(Language language) throws IOException {
+        return new Model(languageVoskModels.getPathLanguageModels(language).toString());
     }
 
     private String extractTextFromJson(String jsonString) {

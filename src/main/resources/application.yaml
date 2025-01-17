@@ -11,6 +11,7 @@ path:
   to:
     dir: /temp
 vosk:
-  path-model: /modelsVosk/vosk-model-ru-0.42
+  pathLanguageModels:
+    RUSSIAN: /modelsVosk/vosk-model-ru-0.42
 server:
   port: 8080
