@@ -3,7 +3,8 @@ package ru.troyanov.transcribtionservice.dto;
 import java.util.Optional;
 
 public enum Language {
-    RUSSIAN("ru-RU");
+    RUSSIAN("ru-RU"),
+    ENGLISH("en-US"),;
 
     private String value;
 
