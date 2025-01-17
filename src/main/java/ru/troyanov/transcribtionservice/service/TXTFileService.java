@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class TXTFileService implements FileService {
@@ -20,8 +20,7 @@ public class TXTFileService implements FileService {
 
     @Override
     public File generateFile(String content) {
-        LocalDateTime now = LocalDateTime.now();
-        Path path = pathToDir.resolve(now + ".txt");
+        Path path = pathToDir.resolve(UUID.randomUUID() + ".txt");
 
         try {
             Files.writeString(path, content, StandardOpenOption.CREATE);

@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PDFileService implements FileService {
@@ -24,8 +24,7 @@ public class PDFileService implements FileService {
     @Override
     public File generateFile(String content) {
 
-        LocalDateTime now = LocalDateTime.now();
-        File file = pathToDir.resolve(now + ".pdf").toFile();
+        File file = pathToDir.resolve(UUID.randomUUID() + ".pdf").toFile();
 
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage();

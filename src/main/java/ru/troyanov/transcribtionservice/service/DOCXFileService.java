@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class DOCXFileService implements FileService {
@@ -20,11 +20,10 @@ public class DOCXFileService implements FileService {
 
     @Override
     public File generateFile(String content) {
-        LocalDateTime now = LocalDateTime.now();
-        File file = pathToDir.resolve(now + ".docx").toFile();
+        File file = pathToDir.resolve(UUID.randomUUID() + ".docx").toFile();
 
         try (XWPFDocument doc = new XWPFDocument();
-             FileOutputStream fos = new FileOutputStream(file);) {
+             FileOutputStream fos = new FileOutputStream(file)) {
             XWPFParagraph paragraph = doc.createParagraph();
             XWPFRun run = paragraph.createRun();
 

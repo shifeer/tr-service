@@ -10,6 +10,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "vosk")
 public class LanguageVoskModels {
     private final Map<Language, Path> pathLanguageModels;
+
     @ConstructorBinding
     public LanguageVoskModels(Map<Language, Path> pathLanguageModels) {
         this.pathLanguageModels = pathLanguageModels;
