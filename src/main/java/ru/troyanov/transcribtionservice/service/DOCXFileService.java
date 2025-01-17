@@ -15,7 +15,7 @@ import java.util.UUID;
 @Service
 public class DOCXFileService implements FileService {
 
-    @Value("#{systemProperties['user.dir'] + '${path.to.dir}'}")
+    @Value("#{systemEnvironment['PATH_MODEL_DIR'] ?: systemProperties['user.dir'] + '${path.temp.dir}'}")
     private Path pathToDir;
 
     @Override

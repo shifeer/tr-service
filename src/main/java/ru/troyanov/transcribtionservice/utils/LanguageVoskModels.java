@@ -14,7 +14,11 @@ public class LanguageVoskModels {
     @ConstructorBinding
     public LanguageVoskModels(Map<Language, Path> pathLanguageModels) {
         this.pathLanguageModels = pathLanguageModels;
-        this.pathLanguageModels.forEach((key, value) -> this.pathLanguageModels.put(key, Path.of(System.getProperty("user.dir") + value)));
+        if (System.getenv("PATH_MODELS_DIR") != null) {
+            this.pathLanguageModels.forEach((key, value) -> this.pathLanguageModels.put(key, Path.of(System.getenv("PATH_MODELS_DIR") + value)));
+        } else {
+            this.pathLanguageModels.forEach((key, value) -> this.pathLanguageModels.put(key, Path.of(System.getProperty("user.dir") + value)));
+        }
     }
 
     public Path getPathLanguageModels(Language language) {

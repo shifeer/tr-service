@@ -15,7 +15,7 @@ import java.util.UUID;
 @Service
 public class TXTFileService implements FileService {
 
-    @Value("#{systemProperties['user.dir'] + '${path.to.dir}'}")
+    @Value("#{systemEnvironment['PATH_TEMP_DIR'] ?: systemProperties['user.dir'] + '${path.temp.dir}'}")
     private Path pathToDir;
 
     @Override

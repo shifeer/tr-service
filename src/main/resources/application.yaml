@@ -8,10 +8,11 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
 path:
-  to:
+  temp:
     dir: /temp
 vosk:
   pathLanguageModels:
     RUSSIAN: /modelsVosk/vosk-model-ru-0.42
+    ENGLISH: /modelsVosk/vosk-model-en-us-0.42-gigaspeech
 server:
   port: 8080

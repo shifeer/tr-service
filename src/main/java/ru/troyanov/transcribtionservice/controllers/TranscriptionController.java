@@ -35,7 +35,7 @@ public class TranscriptionController {
 
     private final TranscriptionService transcriptionService;
     private final StatusTranscriptionHandlerService statusTranscriptionHandlerService;
-    @Value("#{systemProperties['user.dir'] + '${path.to.dir}'}")
+    @Value("#{systemEnvironment['PATH_TEMP_DIR'] ?: systemProperties['user.dir'] + '${path.temp.dir}'}")
     private Path pathToDir;
 
     @PostMapping
